@@ -65,7 +65,7 @@ export function Debt() {
             />
             <div className="mt-4 flex flex-wrap gap-4 text-xs text-text-muted">
               <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-data-negative" /> Total Debt</span>
-              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-blue" /> Public Holdings</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-phosphor" /> Public Holdings</span>
               <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-purple" /> Intragovernmental</span>
             </div>
           </div>

@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { api } from "../lib/api";
+import { formatValue } from "../lib/format";
+import type { OverviewData } from "../lib/types";
 
 /* ═══════════════════════════════════════════════════════════
    Landing — Terminal-style homepage for TrackTheDollar.com
@@ -124,11 +127,29 @@ function Hero() {
 /* ─── 3. Signal Strip ─── */
 
 function SignalStrip() {
+  const [overview, setOverview] = useState<OverviewData | null>(null);
+
+  useEffect(() => {
+    api.overview({ range: "30d" }).then((res) => setOverview(res.data)).catch(() => {});
+  }, []);
+
+  const fmt = (item: { value: number | null; unit: string } | null | undefined) =>
+    item ? formatValue(item.value, item.unit) : "—";
+
+  const liveSignals = [
+    { label: "Dollar Index", display: fmt(overview?.summary.dollar), source: "FRED · Fed", to: "/dollar-strength" },
+    { label: "National Debt", display: fmt(overview?.summary.debt), source: "Treasury", to: "/debt" },
+    { label: "M2 Supply", display: fmt(overview?.summary.m2), source: "FRED · Fed", to: "/money-supply" },
+    { label: "CPI", display: fmt(overview?.summary.inflation), source: "BLS", to: "/inflation" },
+    { label: "Defense", display: fmt(overview?.summary.defenseObligations), source: "USAspending", to: "/defense-spending" },
+    { label: "Sources", display: "6 / 6", source: "All active", to: "/source-health" },
+  ];
+
   return (
     <section className="border-b border-terminal-border">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-x divide-terminal-border">
-          {signals.map((s) => (
+          {liveSignals.map((s) => (
             <Link
               key={s.label}
               to={s.to}
@@ -456,14 +477,6 @@ function SiteFooter() {
    Data
    ═══════════════════════════════════════════════════════════ */
 
-const signals = [
-  { label: "Dollar Index", display: "—", source: "FRED · Fed", to: "/dollar-strength" },
-  { label: "National Debt", display: "—", source: "Treasury", to: "/debt" },
-  { label: "M2 Supply", display: "—", source: "FRED · Fed", to: "/money-supply" },
-  { label: "CPI", display: "—", source: "BLS", to: "/inflation" },
-  { label: "Defense", display: "—", source: "USAspending", to: "/defense-spending" },
-  { label: "Sources", display: "6 / 6", source: "All active", to: "/source-health" },
-];
 
 const systemChannels = [
   { name: "Interest Rates", description: "Fed Funds rate and Treasury yield curve set the price of money", source: "FRED" },
