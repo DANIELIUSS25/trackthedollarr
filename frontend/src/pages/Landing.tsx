@@ -95,7 +95,72 @@ function SiteNav() {
 
 /* ─── 2. Hero ─── */
 
-function Hero() {
+const debtUsdFmt = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+});
+
+function LiveDebtCounter({ overview }: { overview: OverviewData | null }) {
+  const [value, setValue] = useState<number | null>(null);
+
+  useEffect(() => {
+    const obs = overview?.series?.debt?.observations;
+    const unit = overview?.series?.debt?.series?.unit;
+    if (!obs || obs.length < 2 || !unit) return;
+
+    const sorted = [...obs].sort(
+      (a, b) => new Date(b.observedAt).getTime() - new Date(a.observedAt).getTime(),
+    );
+
+    const latest = sorted[0];
+    const prev = sorted[1];
+    if (typeof latest.value !== "number" || typeof prev.value !== "number") return;
+
+    const toUsd = (v: number) => (unit === "billions_usd" ? v * 1e9 : v);
+    const latestUsd = toUsd(latest.value);
+    const prevUsd = toUsd(prev.value);
+
+    const timeDiff =
+      new Date(latest.observedAt).getTime() - new Date(prev.observedAt).getTime();
+    const perMs = timeDiff > 0 ? (latestUsd - prevUsd) / timeDiff : 0;
+
+    const latestTime = new Date(latest.observedAt).getTime();
+    const tick = () => setValue(latestUsd + perMs * (Date.now() - latestTime));
+
+    tick();
+    if (perMs <= 0) return;
+
+    const interval = setInterval(tick, 100);
+    return () => clearInterval(interval);
+  }, [overview]);
+
+  if (value == null) return null;
+
+  return (
+    <Link
+      to="/us-debt"
+      className="mt-8 block border border-phosphor/40 bg-phosphor-dim p-5 transition-colors hover:border-phosphor"
+    >
+      <p className="mb-2 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-phosphor/70">
+        <span className="inline-block h-1.5 w-1.5 animate-pulse bg-phosphor" />
+        Live U.S. National Debt — Ticking in Real Time
+      </p>
+      <p
+        className="font-mono text-3xl font-black tabular-nums text-phosphor sm:text-4xl lg:text-5xl"
+        style={{ textShadow: "0 0 20px rgba(0,255,65,0.35)" }}
+      >
+        {debtUsdFmt.format(value)}
+      </p>
+      <p className="mt-2 text-[10px] text-text-muted">
+        Extrapolated from U.S. Treasury · Debt to the Penny · Updated daily →
+      </p>
+    </Link>
+  );
+}
+
+function Hero({ overview }: { overview: OverviewData | null }) {
   return (
     <section className="relative pt-36 pb-24 sm:pt-44 sm:pb-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
@@ -111,7 +176,9 @@ function Hero() {
             <span className="text-text-primary">has crossed $39 trillion</span>
           </h1>
 
-          <p className="mt-7 max-w-lg text-[15px] leading-[1.7] text-text-secondary">
+          <LiveDebtCounter overview={overview} />
+
+          <p className="mt-8 max-w-lg text-[15px] leading-[1.7] text-text-secondary">
             TrackTheDollar is the live national debt tracker built on official U.S. government sources.
             Monitor debt, dollar strength, inflation, interest rates, and defense spending — all in one terminal.
           </p>
@@ -132,8 +199,8 @@ function Hero() {
             <Link to="/dashboard" className="btn-primary">
               Track The Dollar &rarr;
             </Link>
-            <Link to="/debt" className="btn-secondary">
-              View Debt Data
+            <Link to="/us-debt" className="btn-secondary">
+              Live Debt Tracker
             </Link>
           </div>
         </div>
