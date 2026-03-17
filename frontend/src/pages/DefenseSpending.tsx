@@ -44,7 +44,7 @@ export function DefenseSpending() {
               onClick={() => setCategory(c.value)}
               className={`rounded px-3 py-1 text-xs font-medium transition-colors ${
                 category === c.value
-                  ? "bg-accent-gold-dim text-accent-gold shadow-sm"
+                  ? "bg-phosphor-dim text-phosphor shadow-sm"
                   : "text-text-muted hover:text-text-secondary"
               }`}
             >

@@ -50,9 +50,9 @@ export function Rates() {
               height={340}
             />
             <div className="mt-4 flex flex-wrap gap-4 text-xs text-text-muted">
-              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-gold" /> Fed Funds</span>
-              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-blue" /> 2Y Treasury</span>
-              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-data-negative" /> 10Y Treasury</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2  bg-phosphor" /> Fed Funds</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2  bg-phosphor" /> 2Y Treasury</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2  bg-data-negative" /> 10Y Treasury</span>
             </div>
           </div>
 

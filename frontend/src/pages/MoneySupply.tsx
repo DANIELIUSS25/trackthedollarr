@@ -50,9 +50,9 @@ export function MoneySupply() {
               height={340}
             />
             <div className="mt-4 flex flex-wrap gap-4 text-xs text-text-muted">
-              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-blue" /> M2</span>
-              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-gold" /> Fed Assets</span>
-              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-purple" /> Reserves</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2  bg-phosphor" /> M2</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2  bg-phosphor" /> Fed Assets</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2  bg-accent-purple" /> Reserves</span>
             </div>
           </div>
 

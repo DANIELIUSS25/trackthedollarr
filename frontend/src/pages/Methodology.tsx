@@ -87,7 +87,7 @@ export function Methodology() {
 
               {note.contentMarkdown && (
                 <details className="group">
-                  <summary className="cursor-pointer text-xs font-medium text-accent-blue hover:text-accent-gold">
+                  <summary className="cursor-pointer text-xs font-medium text-phosphor hover:text-phosphor">
                     Show full methodology details
                   </summary>
                   <div className="mt-3 whitespace-pre-wrap rounded bg-surface-3 px-4 py-3 font-mono text-xs text-text-secondary">

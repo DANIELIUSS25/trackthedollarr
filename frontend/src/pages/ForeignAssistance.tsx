@@ -38,7 +38,7 @@ export function ForeignAssistance() {
               onClick={() => setCategory(c)}
               className={`rounded px-3 py-1 text-xs font-medium capitalize transition-colors ${
                 category === c
-                  ? "bg-accent-gold-dim text-accent-gold shadow-sm"
+                  ? "bg-phosphor-dim text-phosphor shadow-sm"
                   : "text-text-muted hover:text-text-secondary"
               }`}
             >
