@@ -18,7 +18,7 @@ export function Landing() {
   return (
     <div className="min-h-screen bg-terminal-black text-text-primary">
       <SiteNav />
-      <Hero />
+      <Hero overview={overview} />
       <SignalStrip overview={overview} />
       <SystemSection />
       <MonetaryProxySection overview={overview} />
