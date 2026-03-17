@@ -16,7 +16,7 @@ const categories: { value: Category; label: string }[] = [
   { value: "grants", label: "Grants" },
 ];
 
-const colors = ["#d45656", "#4a7fff", "#c5a44e"];
+const colors = ["#f87171", "#5b8def", "#c9a94e"];
 
 export function DefenseSpending() {
   const { range, setRange } = useRange("2y");

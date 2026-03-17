@@ -8,9 +8,7 @@ interface NavSection {
 const sections: NavSection[] = [
   {
     title: "Platform",
-    items: [
-      { to: "/dashboard", label: "Overview" },
-    ],
+    items: [{ to: "/dashboard", label: "Overview" }],
   },
   {
     title: "Market Intelligence",
@@ -42,12 +40,10 @@ const sections: NavSection[] = [
 
 export function Nav() {
   return (
-    <nav className="flex flex-col gap-1 px-3 py-4">
-      {sections.map((section) => (
-        <div key={section.title} className="mb-2">
-          <h3 className="mb-1 px-3 text-2xs font-semibold uppercase tracking-widest text-text-tertiary">
-            {section.title}
-          </h3>
+    <nav className="flex flex-col gap-0.5 px-3 py-5">
+      {sections.map((section, idx) => (
+        <div key={section.title} className={idx > 0 ? "mt-5" : ""}>
+          <h3 className="mb-2 px-3 section-label">{section.title}</h3>
           {section.items.map((item) => (
             <NavLink
               key={item.to}

@@ -43,23 +43,23 @@ export function Inflation() {
             <MultiSeriesChart
               series={[
                 { observations: data.cpi.observations, color: "#d4944e", name: "CPI All Items" },
-                { observations: data.coreCpi.observations, color: "#4a7fff", name: "Core CPI" },
-                { observations: data.breakeven5y.observations, color: "#8b5cf6", name: "5Y Breakeven" },
+                { observations: data.coreCpi.observations, color: "#5b8def", name: "Core CPI" },
+                { observations: data.breakeven5y.observations, color: "#a78bfa", name: "5Y Breakeven" },
               ]}
               unit={data.cpi.series.unit}
               height={340}
             />
-            <div className="mt-3 flex gap-4 text-xs">
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-data-warning" /> CPI All Items</span>
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent-blue" /> Core CPI</span>
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent-purple" /> 5Y Breakeven</span>
+            <div className="mt-4 flex flex-wrap gap-4 text-xs text-text-muted">
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-data-warning" /> CPI All Items</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-blue" /> Core CPI</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-purple" /> 5Y Breakeven</span>
             </div>
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
             <SeriesCard payload={data.cpi} color="#d4944e" compact />
-            <SeriesCard payload={data.coreCpi} color="#4a7fff" compact />
-            <SeriesCard payload={data.breakeven5y} color="#8b5cf6" compact />
+            <SeriesCard payload={data.coreCpi} color="#5b8def" compact />
+            <SeriesCard payload={data.breakeven5y} color="#a78bfa" compact />
           </div>
         </>
       )}

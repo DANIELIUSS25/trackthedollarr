@@ -14,7 +14,7 @@ export function MetricCard({ metric, className = "" }: MetricCardProps) {
   return (
     <div className={`card ${className}`}>
       <div className="card-header">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <h3 className="card-title">{def.name}</h3>
           {def.isProxy && <span className="badge badge-proxy">Proxy</span>}
         </div>
@@ -24,16 +24,16 @@ export function MetricCard({ metric, className = "" }: MetricCardProps) {
         />
       </div>
 
-      <div className="mb-3">
+      <div className="mb-4">
         <span className="metric-value">
           {formatValue(snapshot.value, def.unit)}
         </span>
-        <span className="ml-2 text-xs text-text-tertiary">
+        <span className="ml-2 text-2xs text-text-muted">
           as of {formatDate(snapshot.asOf)}
         </span>
       </div>
 
-      <p className="mb-3 text-sm text-text-secondary">{def.description}</p>
+      <p className="mb-4 text-sm leading-relaxed text-text-secondary">{def.description}</p>
 
       {def.isProxy && (
         <ProxyDisclosure
@@ -43,19 +43,17 @@ export function MetricCard({ metric, className = "" }: MetricCardProps) {
         />
       )}
 
-      {/* Component breakdown if available */}
+      {/* Component breakdown */}
       {snapshot.payload?.components != null && (
-        <div className="mt-3 border-t border-border-subtle pt-3">
-          <p className="mb-2 text-2xs font-semibold uppercase tracking-wider text-text-tertiary">
-            Components
-          </p>
+        <div className="mt-4 border-t border-border-subtle pt-4">
+          <p className="mb-2.5 section-label">Components</p>
           <div className="grid grid-cols-2 gap-2">
             {Object.entries(
               snapshot.payload.components as Record<string, number>,
             ).map(([key, val]) => (
-              <div key={key} className="rounded bg-surface-3 px-2 py-1.5">
-                <p className="text-2xs text-text-tertiary">{formatComponentLabel(key)}</p>
-                <p className="font-mono text-sm text-text-primary">
+              <div key={key} className="stat-cell">
+                <p className="text-2xs text-text-muted">{formatComponentLabel(key)}</p>
+                <p className="font-mono text-sm font-medium text-text-primary">
                   {typeof val === "number" ? val.toFixed(2) : String(val)}
                 </p>
               </div>
@@ -66,14 +64,12 @@ export function MetricCard({ metric, className = "" }: MetricCardProps) {
 
       {/* Source timestamps */}
       {Object.keys(snapshot.sourceTimestamps).length > 0 && (
-        <div className="mt-3 border-t border-border-subtle pt-3">
-          <p className="mb-1 text-2xs font-semibold uppercase tracking-wider text-text-tertiary">
-            Source Data Points
-          </p>
-          <div className="space-y-0.5">
+        <div className="mt-4 border-t border-border-subtle pt-4">
+          <p className="mb-2 section-label">Source Data Points</p>
+          <div className="space-y-1">
             {Object.entries(snapshot.sourceTimestamps).map(([key, ts]) => (
               <div key={key} className="flex items-center justify-between text-xs">
-                <span className="text-text-tertiary">{formatComponentLabel(key)}</span>
+                <span className="text-text-muted">{formatComponentLabel(key)}</span>
                 <span className="font-mono text-text-secondary">
                   {formatDate(ts)}
                 </span>

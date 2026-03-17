@@ -6,44 +6,65 @@ export function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
-  // Close mobile nav on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen">
-      {/* Sidebar - desktop */}
-      <aside className="hidden w-60 flex-shrink-0 border-r border-border-subtle bg-surface-0 lg:block">
-        <div className="sticky top-0 flex h-screen flex-col overflow-y-auto">
+    <div className="flex min-h-screen bg-surface-0">
+      {/* Desktop Sidebar */}
+      <aside className="hidden w-[260px] flex-shrink-0 lg:block">
+        <div className="fixed top-0 flex h-screen w-[260px] flex-col border-r border-border-subtle bg-surface-1/80 backdrop-blur-xl">
+          {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2 border-b border-border-subtle px-5 py-4"
+            className="flex items-center gap-3 border-b border-border-subtle px-6 py-5"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded bg-accent-gold text-lg font-bold text-text-inverse">
-              $
-            </span>
-            <span className="text-sm font-bold tracking-tight text-text-primary">
-              TrackTheDollar
-            </span>
+            <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-accent-gold to-accent-gold-bright shadow-glow">
+              <span className="text-base font-bold text-surface-0">$</span>
+            </div>
+            <div>
+              <span className="text-sm font-bold tracking-tight text-text-primary">
+                TrackTheDollar
+              </span>
+              <span className="block text-2xs font-medium text-text-muted">
+                Macro Intelligence
+              </span>
+            </div>
           </Link>
-          <Nav />
+
+          {/* Nav */}
+          <div className="flex-1 overflow-y-auto">
+            <Nav />
+          </div>
+
+          {/* Sidebar footer */}
+          <div className="border-t border-border-subtle p-4">
+            <div className="rounded-lg bg-surface-3/40 px-3 py-2.5">
+              <div className="flex items-center gap-2">
+                <div className="h-1.5 w-1.5 rounded-full bg-data-positive glow-dot" />
+                <span className="text-2xs font-medium text-text-tertiary">
+                  Live data feeds active
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </aside>
 
-      {/* Mobile header */}
-      <div className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between border-b border-border-subtle bg-surface-0/95 px-4 py-3 backdrop-blur lg:hidden">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded bg-accent-gold text-sm font-bold text-text-inverse">
-            $
-          </span>
-          <span className="text-sm font-bold text-text-primary">
+      {/* Mobile Header */}
+      <div className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between border-b border-border-subtle px-4 py-3 lg:hidden glass-strong">
+        <Link to="/" className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent-gold to-accent-gold-bright shadow-glow">
+            <span className="text-sm font-bold text-surface-0">$</span>
+          </div>
+          <span className="text-sm font-bold tracking-tight text-text-primary">
             TrackTheDollar
           </span>
         </Link>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="rounded-md p-2 text-text-secondary hover:bg-surface-3"
+          className="rounded-lg p-2 text-text-secondary transition-colors hover:bg-surface-3/50 hover:text-text-primary"
           aria-label="Toggle navigation"
         >
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
@@ -56,7 +77,7 @@ export function Layout() {
             ) : (
               <path
                 fillRule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z"
                 clipRule="evenodd"
               />
             )}
@@ -64,33 +85,37 @@ export function Layout() {
         </button>
       </div>
 
-      {/* Mobile nav overlay */}
+      {/* Mobile Nav Overlay */}
       {mobileOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/60 lg:hidden"
-          onClick={() => setMobileOpen(false)}
-        >
-          <aside
-            className="absolute left-0 top-0 h-full w-64 overflow-y-auto bg-surface-0 pt-14"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 z-40 lg:hidden">
+          <div
+            className="absolute inset-0 bg-surface-0/80 backdrop-blur-sm"
+            onClick={() => setMobileOpen(false)}
+          />
+          <aside className="absolute left-0 top-0 h-full w-72 overflow-y-auto border-r border-border-subtle bg-surface-1/95 pt-16 backdrop-blur-xl animate-slide-in">
             <Nav />
           </aside>
         </div>
       )}
 
-      {/* Main content */}
+      {/* Main Content */}
       <main className="flex-1 pt-14 lg:pt-0">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-10">
           <Outlet />
         </div>
-        <footer className="border-t border-border-subtle px-4 py-6 text-center text-xs text-text-tertiary">
-          <p>
-            TrackTheDollar.com — Public-source macroeconomic intelligence.
-            Not investment advice. All data sourced from official U.S.
-            government agencies. Proxy metrics are derived estimates, not
-            official statistics.
-          </p>
+        <footer className="mt-12 border-t border-border-subtle">
+          <div className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-10">
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+              <p className="text-xs text-text-muted">
+                TrackTheDollar.com — Institutional-grade macro intelligence
+              </p>
+              <p className="max-w-xl text-center text-2xs leading-relaxed text-text-muted sm:text-right">
+                Not investment advice. All data from official U.S. government
+                agencies. Proxy metrics are derived estimates, not official
+                statistics.
+              </p>
+            </div>
+          </div>
         </footer>
       </main>
     </div>

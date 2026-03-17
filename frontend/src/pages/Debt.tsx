@@ -46,34 +46,34 @@ export function Debt() {
               series={[
                 {
                   observations: data.totalDebt.observations,
-                  color: "#d45656",
+                  color: "#f87171",
                   name: "Total Debt",
                 },
                 {
                   observations: data.debtHeldByPublic.observations,
-                  color: "#4a7fff",
+                  color: "#5b8def",
                   name: "Public Holdings",
                 },
                 {
                   observations: data.intragovernmental.observations,
-                  color: "#8b5cf6",
+                  color: "#a78bfa",
                   name: "Intragovernmental",
                 },
               ]}
               unit="usd"
               height={340}
             />
-            <div className="mt-3 flex gap-4 text-xs">
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-data-negative" /> Total Debt</span>
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent-blue" /> Public Holdings</span>
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent-purple" /> Intragovernmental</span>
+            <div className="mt-4 flex flex-wrap gap-4 text-xs text-text-muted">
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-data-negative" /> Total Debt</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-blue" /> Public Holdings</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-purple" /> Intragovernmental</span>
             </div>
           </div>
 
           {/* Individual series + velocity metric */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <SeriesCard payload={data.totalDebt} color="#d45656" compact />
-            <SeriesCard payload={data.debtHeldByPublic} color="#4a7fff" compact />
+            <SeriesCard payload={data.totalDebt} color="#f87171" compact />
+            <SeriesCard payload={data.debtHeldByPublic} color="#5b8def" compact />
             <MetricCard metric={data.debtGrowthVelocity} />
           </div>
         </>

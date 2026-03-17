@@ -42,24 +42,24 @@ export function Rates() {
             </div>
             <MultiSeriesChart
               series={[
-                { observations: data.fedFunds.observations, color: "#c5a44e", name: "Fed Funds" },
-                { observations: data.treasury2y.observations, color: "#4a7fff", name: "2Y Treasury" },
-                { observations: data.treasury10y.observations, color: "#d45656", name: "10Y Treasury" },
+                { observations: data.fedFunds.observations, color: "#c9a94e", name: "Fed Funds" },
+                { observations: data.treasury2y.observations, color: "#5b8def", name: "2Y Treasury" },
+                { observations: data.treasury10y.observations, color: "#f87171", name: "10Y Treasury" },
               ]}
               unit="percent"
               height={340}
             />
-            <div className="mt-3 flex gap-4 text-xs">
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent-gold" /> Fed Funds</span>
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent-blue" /> 2Y Treasury</span>
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-data-negative" /> 10Y Treasury</span>
+            <div className="mt-4 flex flex-wrap gap-4 text-xs text-text-muted">
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-gold" /> Fed Funds</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-blue" /> 2Y Treasury</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-data-negative" /> 10Y Treasury</span>
             </div>
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
-            <SeriesCard payload={data.fedFunds} color="#c5a44e" compact />
-            <SeriesCard payload={data.treasury2y} color="#4a7fff" compact />
-            <SeriesCard payload={data.treasury10y} color="#d45656" compact />
+            <SeriesCard payload={data.fedFunds} color="#c9a94e" compact />
+            <SeriesCard payload={data.treasury2y} color="#5b8def" compact />
+            <SeriesCard payload={data.treasury10y} color="#f87171" compact />
           </div>
         </>
       )}

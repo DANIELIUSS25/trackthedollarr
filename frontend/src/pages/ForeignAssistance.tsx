@@ -10,7 +10,7 @@ import { Warnings } from "../components/Warnings";
 
 type Category = "total" | "security";
 
-const colors = ["#4a7fff", "#8b5cf6", "#c5a44e"];
+const colors = ["#5b8def", "#a78bfa", "#c9a94e"];
 
 export function ForeignAssistance() {
   const { range, setRange } = useRange("5y");

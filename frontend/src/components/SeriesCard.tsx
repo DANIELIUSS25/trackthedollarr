@@ -14,7 +14,7 @@ interface SeriesCardProps {
 
 export function SeriesCard({
   payload,
-  color = "#4a7fff",
+  color = "#5b8def",
   chartHeight = 200,
   showChart = true,
   compact = false,
@@ -29,7 +29,7 @@ export function SeriesCard({
         <div>
           <h3 className="card-title">{series.name}</h3>
           {!compact && (
-            <p className="mt-0.5 text-xs text-text-tertiary">
+            <p className="mt-1 text-2xs text-text-muted">
               {series.source} · {series.frequency}
             </p>
           )}
@@ -41,13 +41,13 @@ export function SeriesCard({
       </div>
 
       {/* Current value & deltas */}
-      <div className="mb-3 flex items-end gap-4">
+      <div className="mb-4 flex items-end gap-4">
         <div>
-          <span className={compact ? "font-mono text-xl font-semibold text-text-primary" : "metric-value"}>
+          <span className={compact ? "font-mono text-xl font-semibold tracking-tight text-text-primary" : "metric-value"}>
             {formatValue(latest?.value ?? null, series.unit)}
           </span>
           {latest && (
-            <span className="ml-2 text-xs text-text-tertiary">
+            <span className="ml-2 text-2xs text-text-muted">
               {formatDate(latest.observedAt)}
             </span>
           )}
@@ -60,9 +60,9 @@ export function SeriesCard({
               if (delta == null) return null;
               return (
                 <div key={period} className="text-right">
-                  <p className="text-2xs text-text-tertiary">{period}</p>
+                  <p className="text-2xs text-text-muted">{period}</p>
                   <p
-                    className={`font-mono text-xs font-medium ${
+                    className={`font-mono text-xs font-semibold ${
                       delta > 0
                         ? "text-data-positive"
                         : delta < 0
@@ -81,10 +81,10 @@ export function SeriesCard({
 
       {/* Comparison */}
       {comparison && (
-        <div className="mb-3 rounded bg-surface-3 px-3 py-2 text-xs">
-          <span className="text-text-tertiary">vs {comparison.mode}: </span>
+        <div className="mb-4 rounded-lg bg-surface-3/50 px-3 py-2.5 text-xs">
+          <span className="text-text-muted">vs {comparison.mode}: </span>
           <span
-            className={`font-mono font-medium ${
+            className={`font-mono font-semibold ${
               comparison.percentChange > 0
                 ? "text-data-positive"
                 : comparison.percentChange < 0
@@ -94,27 +94,28 @@ export function SeriesCard({
           >
             {formatDelta(comparison.percentChange)}
           </span>
-          <span className="text-text-tertiary">
-            {" "}
-            (from {formatDate(comparison.baseObservedAt)})
+          <span className="text-text-muted">
+            {" "}(from {formatDate(comparison.baseObservedAt)})
           </span>
         </div>
       )}
 
       {/* Chart */}
       {showChart && observations.length > 0 && (
-        <TimeSeriesChart
-          observations={observations}
-          unit={series.unit}
-          color={color}
-          height={chartHeight}
-          name={series.name}
-        />
+        <div className="-mx-1">
+          <TimeSeriesChart
+            observations={observations}
+            unit={series.unit}
+            color={color}
+            height={chartHeight}
+            name={series.name}
+          />
+        </div>
       )}
 
       {/* Observation warnings */}
       {observations.some((o) => o.warnings.length > 0) && (
-        <div className="mt-2">
+        <div className="mt-3 space-y-1">
           {observations
             .flatMap((o) => o.warnings)
             .filter((w, i, arr) => arr.indexOf(w) === i)
@@ -128,15 +129,15 @@ export function SeriesCard({
 
       {/* Methodology note */}
       {methodology && !compact && (
-        <div className="mt-3 border-t border-border-subtle pt-3">
-          <p className="text-xs text-text-tertiary">
+        <div className="mt-4 border-t border-border-subtle pt-4">
+          <p className="text-xs leading-relaxed text-text-muted">
             <span className="font-medium text-text-secondary">
               {methodology.title}:
             </span>{" "}
             {methodology.summary}
           </p>
           {methodology.limitations && (
-            <p className="mt-1 text-xs text-data-warning">
+            <p className="mt-1.5 text-xs text-data-warning">
               {methodology.limitations}
             </p>
           )}

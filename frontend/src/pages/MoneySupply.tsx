@@ -42,24 +42,24 @@ export function MoneySupply() {
             </div>
             <MultiSeriesChart
               series={[
-                { observations: data.m2.observations, color: "#4a7fff", name: "M2" },
-                { observations: data.fedAssets.observations, color: "#c5a44e", name: "Fed Assets" },
-                { observations: data.reserveBalances.observations, color: "#8b5cf6", name: "Reserves" },
+                { observations: data.m2.observations, color: "#5b8def", name: "M2" },
+                { observations: data.fedAssets.observations, color: "#c9a94e", name: "Fed Assets" },
+                { observations: data.reserveBalances.observations, color: "#a78bfa", name: "Reserves" },
               ]}
               unit={data.m2.series.unit}
               height={340}
             />
-            <div className="mt-3 flex gap-4 text-xs">
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent-blue" /> M2</span>
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent-gold" /> Fed Assets</span>
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent-purple" /> Reserves</span>
+            <div className="mt-4 flex flex-wrap gap-4 text-xs text-text-muted">
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-blue" /> M2</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-gold" /> Fed Assets</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-purple" /> Reserves</span>
             </div>
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
-            <SeriesCard payload={data.m2} color="#4a7fff" compact />
-            <SeriesCard payload={data.fedAssets} color="#c5a44e" compact />
-            <SeriesCard payload={data.reserveBalances} color="#8b5cf6" compact />
+            <SeriesCard payload={data.m2} color="#5b8def" compact />
+            <SeriesCard payload={data.fedAssets} color="#c9a94e" compact />
+            <SeriesCard payload={data.reserveBalances} color="#a78bfa" compact />
           </div>
         </>
       )}

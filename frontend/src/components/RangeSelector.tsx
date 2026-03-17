@@ -19,18 +19,22 @@ interface RangeSelectorProps {
 }
 
 export function RangeSelector({ value, onChange, compact }: RangeSelectorProps) {
-  const items = compact ? ranges.filter((r) => ["30d", "90d", "1y", "5y", "max"].includes(r.value)) : ranges;
+  const items = compact
+    ? ranges.filter((r) =>
+        ["30d", "90d", "1y", "5y", "max"].includes(r.value),
+      )
+    : ranges;
 
   return (
-    <div className="flex gap-1">
+    <div className="inline-flex rounded-lg border border-border-subtle bg-surface-2/50 p-0.5 backdrop-blur-sm">
       {items.map((r) => (
         <button
           key={r.value}
           onClick={() => onChange(r.value)}
-          className={`rounded px-2.5 py-1 text-xs font-medium transition-colors ${
+          className={`relative rounded-md px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
             value === r.value
-              ? "bg-accent-gold/15 text-accent-gold"
-              : "text-text-tertiary hover:bg-surface-4 hover:text-text-secondary"
+              ? "bg-accent-gold-dim text-accent-gold shadow-sm"
+              : "text-text-muted hover:text-text-secondary"
           }`}
         >
           {r.label}

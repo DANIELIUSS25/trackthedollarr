@@ -17,7 +17,7 @@ export function FreshnessIndicator({
     : status === "FRESH"
       ? "badge-fresh"
       : "badge-unknown";
-  const label = isStale ? "Stale" : status === "FRESH" ? "Fresh" : "Unknown";
+  const label = isStale ? "Stale" : status === "FRESH" ? "Live" : "Unknown";
 
   return (
     <div className="flex items-center gap-2">
@@ -25,16 +25,16 @@ export function FreshnessIndicator({
         <span
           className={`inline-block h-1.5 w-1.5 rounded-full ${
             isStale
-              ? "bg-data-warning"
+              ? "bg-data-warning animate-pulse-glow"
               : status === "FRESH"
-                ? "bg-data-positive"
+                ? "bg-data-positive glow-dot"
                 : "bg-data-neutral"
           }`}
         />
         {label}
       </span>
       {lastSync && (
-        <span className="text-2xs text-text-tertiary">
+        <span className="text-2xs text-text-muted">
           {formatRelativeTime(lastSync)}
         </span>
       )}

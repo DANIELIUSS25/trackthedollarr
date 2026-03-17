@@ -37,80 +37,22 @@ export function Dashboard() {
         <>
           {/* Summary cards */}
           <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <SummaryCard
-              label="Dollar Index"
-              item={data.summary.dollar}
-              unit="index"
-              to="/dollar-strength"
-            />
-            <SummaryCard
-              label="Total Debt"
-              item={data.summary.debt}
-              unit="usd"
-              to="/debt"
-            />
-            <SummaryCard
-              label="CPI (All Items)"
-              item={data.summary.inflation}
-              unit="index"
-              to="/inflation"
-            />
-            <SummaryCard
-              label="Fed Funds Rate"
-              item={data.summary.fedFunds}
-              unit="percent"
-              to="/rates"
-            />
-            <SummaryCard
-              label="M2 Money Stock"
-              item={data.summary.m2}
-              unit="billions_usd"
-              to="/money-supply"
-            />
-            <SummaryCard
-              label="Fed Total Assets"
-              item={data.summary.fedAssets}
-              unit="billions_usd"
-              to="/money-supply"
-            />
-            <SummaryCard
-              label="Defense Obligations"
-              item={data.summary.defenseObligations}
-              unit="usd"
-              to="/defense-spending"
-            />
-            <SummaryCard
-              label="Security Assistance"
-              item={data.summary.securityAid}
-              unit="usd"
-              to="/foreign-assistance"
-            />
+            <SummaryCard label="Dollar Index" item={data.summary.dollar} unit="index" to="/dollar-strength" />
+            <SummaryCard label="Total Debt" item={data.summary.debt} unit="usd" to="/debt" />
+            <SummaryCard label="CPI (All Items)" item={data.summary.inflation} unit="index" to="/inflation" />
+            <SummaryCard label="Fed Funds Rate" item={data.summary.fedFunds} unit="percent" to="/rates" />
+            <SummaryCard label="M2 Money Stock" item={data.summary.m2} unit="billions_usd" to="/money-supply" />
+            <SummaryCard label="Fed Total Assets" item={data.summary.fedAssets} unit="billions_usd" to="/money-supply" />
+            <SummaryCard label="Defense Obligations" item={data.summary.defenseObligations} unit="usd" to="/defense-spending" />
+            <SummaryCard label="Security Assistance" item={data.summary.securityAid} unit="usd" to="/foreign-assistance" />
           </div>
 
           {/* Derived metric panels */}
           <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <DerivedMetricPanel
-              label="Debt Growth Velocity"
-              item={data.metrics.debtGrowthVelocity}
-              to="/debt"
-            />
-            <DerivedMetricPanel
-              label="Dollar Z-Score"
-              item={data.metrics.dollarStrengthZScore}
-              to="/dollar-strength"
-            />
-            <DerivedMetricPanel
-              label="Monetary Expansion Proxy"
-              item={data.metrics.monetaryExpansionProxy}
-              to="/monetary-expansion-proxy"
-              isProxy
-            />
-            <DerivedMetricPanel
-              label="War Spending Proxy"
-              item={data.metrics.warSpendingProxy}
-              to="/war-spending-proxy"
-              isProxy
-            />
+            <DerivedMetricPanel label="Debt Growth Velocity" item={data.metrics.debtGrowthVelocity} to="/debt" />
+            <DerivedMetricPanel label="Dollar Z-Score" item={data.metrics.dollarStrengthZScore} to="/dollar-strength" />
+            <DerivedMetricPanel label="Monetary Expansion Proxy" item={data.metrics.monetaryExpansionProxy} to="/monetary-expansion-proxy" isProxy />
+            <DerivedMetricPanel label="War Spending Proxy" item={data.metrics.warSpendingProxy} to="/war-spending-proxy" isProxy />
           </div>
 
           {/* Charts */}
@@ -124,24 +66,19 @@ export function Dashboard() {
                 />
               </div>
               {data.series.dollar.analytics?.latest && (
-                <div className="mb-3 flex items-end gap-3">
-                  <span className="font-mono text-xl font-semibold text-text-primary">
+                <div className="mb-4 flex items-end gap-3">
+                  <span className="font-mono text-xl font-semibold tracking-tight text-text-primary">
                     {formatValue(data.series.dollar.analytics.latest.value, "index")}
                   </span>
                   {data.series.dollar.analytics.deltas["30d"] != null && (
-                    <span className={`font-mono text-xs ${data.series.dollar.analytics.deltas["30d"]! > 0 ? "text-data-positive" : "text-data-negative"}`}>
+                    <span className={`font-mono text-xs font-medium ${data.series.dollar.analytics.deltas["30d"]! > 0 ? "text-data-positive" : "text-data-negative"}`}>
                       {formatDelta(data.series.dollar.analytics.deltas["30d"])}
-                      <span className="ml-1 text-text-tertiary">30d</span>
+                      <span className="ml-1 text-text-muted">30d</span>
                     </span>
                   )}
                 </div>
               )}
-              <TimeSeriesChart
-                observations={data.series.dollar.observations}
-                unit="index"
-                color="#4a7fff"
-                height={200}
-              />
+              <TimeSeriesChart observations={data.series.dollar.observations} unit="index" color="#5b8def" height={200} />
             </div>
 
             <div className="card">
@@ -153,24 +90,19 @@ export function Dashboard() {
                 />
               </div>
               {data.series.debt.analytics?.latest && (
-                <div className="mb-3 flex items-end gap-3">
-                  <span className="font-mono text-xl font-semibold text-text-primary">
+                <div className="mb-4 flex items-end gap-3">
+                  <span className="font-mono text-xl font-semibold tracking-tight text-text-primary">
                     {formatValue(data.series.debt.analytics.latest.value, "usd")}
                   </span>
                   {data.series.debt.analytics.deltas["30d"] != null && (
-                    <span className={`font-mono text-xs ${data.series.debt.analytics.deltas["30d"]! > 0 ? "text-data-negative" : "text-data-positive"}`}>
+                    <span className={`font-mono text-xs font-medium ${data.series.debt.analytics.deltas["30d"]! > 0 ? "text-data-negative" : "text-data-positive"}`}>
                       {formatDelta(data.series.debt.analytics.deltas["30d"])}
-                      <span className="ml-1 text-text-tertiary">30d</span>
+                      <span className="ml-1 text-text-muted">30d</span>
                     </span>
                   )}
                 </div>
               )}
-              <TimeSeriesChart
-                observations={data.series.debt.observations}
-                unit="usd"
-                color="#d45656"
-                height={200}
-              />
+              <TimeSeriesChart observations={data.series.debt.observations} unit="usd" color="#f87171" height={200} />
             </div>
 
             <div className="card">
@@ -182,24 +114,19 @@ export function Dashboard() {
                 />
               </div>
               {data.series.inflation.analytics?.latest && (
-                <div className="mb-3 flex items-end gap-3">
-                  <span className="font-mono text-xl font-semibold text-text-primary">
+                <div className="mb-4 flex items-end gap-3">
+                  <span className="font-mono text-xl font-semibold tracking-tight text-text-primary">
                     {formatValue(data.series.inflation.analytics.latest.value, "index")}
                   </span>
                   {data.series.inflation.analytics.deltas["1y"] != null && (
-                    <span className={`font-mono text-xs ${data.series.inflation.analytics.deltas["1y"]! > 0 ? "text-data-negative" : "text-data-positive"}`}>
+                    <span className={`font-mono text-xs font-medium ${data.series.inflation.analytics.deltas["1y"]! > 0 ? "text-data-negative" : "text-data-positive"}`}>
                       {formatDelta(data.series.inflation.analytics.deltas["1y"])}
-                      <span className="ml-1 text-text-tertiary">1y</span>
+                      <span className="ml-1 text-text-muted">1y</span>
                     </span>
                   )}
                 </div>
               )}
-              <TimeSeriesChart
-                observations={data.series.inflation.observations}
-                unit="index"
-                color="#d4944e"
-                height={200}
-              />
+              <TimeSeriesChart observations={data.series.inflation.observations} unit="index" color="#d4944e" height={200} />
             </div>
           </div>
         </>
@@ -220,15 +147,15 @@ function SummaryCard({
   to: string;
 }) {
   return (
-    <Link to={to} className="card group transition-colors hover:border-border-strong">
-      <p className="mb-1 text-2xs font-semibold uppercase tracking-wider text-text-tertiary group-hover:text-text-secondary">
+    <Link to={to} className="card card-interactive group">
+      <p className="mb-1.5 text-2xs font-semibold uppercase tracking-wider text-text-muted group-hover:text-text-secondary transition-colors">
         {label}
       </p>
-      <p className="font-mono text-lg font-semibold text-text-primary">
+      <p className="font-mono text-lg font-semibold tracking-tight text-text-primary">
         {item ? formatValue(item.value, unit) : "—"}
       </p>
       {item?.asOf && (
-        <p className="text-2xs text-text-tertiary">{formatDate(item.asOf)}</p>
+        <p className="mt-1 text-2xs text-text-muted">{formatDate(item.asOf)}</p>
       )}
     </Link>
   );
@@ -246,21 +173,21 @@ function DerivedMetricPanel({
   isProxy?: boolean;
 }) {
   return (
-    <Link to={to} className="card group transition-colors hover:border-border-strong">
-      <div className="mb-1 flex items-center gap-2">
-        <p className="text-2xs font-semibold uppercase tracking-wider text-text-tertiary group-hover:text-text-secondary">
+    <Link to={to} className="card card-interactive group">
+      <div className="mb-1.5 flex items-center gap-2">
+        <p className="text-2xs font-semibold uppercase tracking-wider text-text-muted group-hover:text-text-secondary transition-colors">
           {label}
         </p>
         {isProxy && <span className="badge badge-proxy text-2xs">Proxy</span>}
       </div>
-      <p className="font-mono text-lg font-semibold text-text-primary">
+      <p className="font-mono text-lg font-semibold tracking-tight text-text-primary">
         {item ? formatValue(item.value, item.unit) : "—"}
       </p>
       {item?.stale && (
-        <p className="text-2xs text-data-warning">Data may be stale</p>
+        <p className="mt-1 text-2xs text-data-warning">Data may be stale</p>
       )}
       {item?.asOf && !item.stale && (
-        <p className="text-2xs text-text-tertiary">{formatDate(item.asOf)}</p>
+        <p className="mt-1 text-2xs text-text-muted">{formatDate(item.asOf)}</p>
       )}
     </Link>
   );

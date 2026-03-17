@@ -32,7 +32,7 @@ export function DollarStrength() {
       ) : (
         <div className="grid gap-4 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <SeriesCard payload={data.series} color="#4a7fff" chartHeight={340} />
+            <SeriesCard payload={data.series} color="#5b8def" chartHeight={340} />
           </div>
           <MetricCard metric={data.metric} />
         </div>
