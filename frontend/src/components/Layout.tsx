@@ -11,23 +11,19 @@ export function Layout() {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen bg-surface-0">
+    <div className="flex min-h-screen bg-terminal-black">
       {/* Desktop Sidebar */}
       <aside className="hidden w-[240px] flex-shrink-0 lg:block">
-        <div className="fixed top-0 flex h-screen w-[240px] flex-col border-r border-border-subtle bg-surface-1">
+        <div className="fixed top-0 flex h-screen w-[240px] flex-col border-r border-terminal-border bg-terminal-black">
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2.5 border-b border-border-subtle px-5 py-4"
+            className="flex items-center gap-2.5 border-b border-terminal-border px-5 py-4"
           >
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-accent-gold">
-              <span className="text-xs font-bold text-text-inverse">$</span>
-            </div>
-            <div>
-              <span className="text-sm font-semibold tracking-tight text-text-primary">
-                TrackTheDollar
-              </span>
-            </div>
+            <span className="font-mono text-sm font-bold text-phosphor">[$]</span>
+            <span className="text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary">
+              TrackTheDollar
+            </span>
           </Link>
 
           {/* Nav */}
@@ -36,30 +32,32 @@ export function Layout() {
           </div>
 
           {/* Sidebar footer */}
-          <div className="border-t border-border-subtle px-4 py-3">
+          <div className="border-t border-terminal-border px-4 py-3">
             <div className="flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-data-positive" />
-              <span className="text-2xs font-medium text-text-muted">
-                Live data feeds
+              <span className="text-phosphor">&gt;</span>
+              <span className="text-2xs font-medium text-text-tertiary">
+                FEEDS:
               </span>
+              <span className="text-2xs font-medium text-phosphor">
+                ACTIVE
+              </span>
+              <span className="inline-block w-1.5 h-3 bg-phosphor animate-cursor-blink" />
             </div>
           </div>
         </div>
       </aside>
 
       {/* Mobile Header */}
-      <div className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between border-b border-border-subtle bg-surface-0/95 backdrop-blur-sm px-4 py-3 lg:hidden">
+      <div className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between border-b border-terminal-border bg-terminal-black px-4 py-3 lg:hidden">
         <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-accent-gold">
-            <span className="text-xs font-bold text-text-inverse">$</span>
-          </div>
-          <span className="text-sm font-semibold tracking-tight text-text-primary">
+          <span className="font-mono text-sm font-bold text-phosphor">[$]</span>
+          <span className="text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary">
             TrackTheDollar
           </span>
         </Link>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="rounded-md p-2 text-text-tertiary transition-colors hover:text-text-primary"
+          className="p-2 text-text-tertiary transition-colors hover:text-phosphor"
           aria-label="Toggle navigation"
         >
           <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20">
@@ -84,10 +82,10 @@ export function Layout() {
       {mobileOpen && (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div
-            className="absolute inset-0 bg-surface-0/80"
+            className="absolute inset-0 bg-terminal-black/80"
             onClick={() => setMobileOpen(false)}
           />
-          <aside className="absolute left-0 top-0 h-full w-64 overflow-y-auto border-r border-border-subtle bg-surface-1 pt-14 animate-slide-in">
+          <aside className="absolute left-0 top-0 h-full w-64 overflow-y-auto border-r border-terminal-border bg-terminal-black pt-14 animate-slide-in">
             <Nav />
           </aside>
         </div>
@@ -95,19 +93,18 @@ export function Layout() {
 
       {/* Main Content */}
       <main className="flex-1 pt-14 lg:pt-0">
-        <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1600px] px-4 py-6 sm:px-6 lg:px-8">
           <Outlet />
         </div>
-        <footer className="mt-12 border-t border-border-subtle">
-          <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 lg:px-8">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-[11px] text-text-muted">
+        <footer className="mt-8 border-t border-terminal-border">
+          <div className="mx-auto max-w-[1600px] px-4 py-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-[10px] uppercase tracking-wider text-text-muted">
                 TrackTheDollar.com
               </p>
-              <p className="max-w-lg text-[11px] leading-relaxed text-text-muted sm:text-right">
+              <p className="max-w-lg text-[10px] leading-relaxed text-text-muted sm:text-right">
                 Not investment advice. All data from official U.S. government
-                agencies. Proxy metrics are derived estimates, not official
-                statistics.
+                agencies. Proxy metrics are derived estimates.
               </p>
             </div>
           </div>

@@ -5,11 +5,11 @@ export function LoadingState({
 }) {
   return (
     <div className="flex flex-col items-center justify-center py-24">
-      <div className="relative mb-5">
-        <div className="h-10 w-10 rounded-full border-2 border-surface-4" />
-        <div className="absolute inset-0 h-10 w-10 animate-spin rounded-full border-2 border-transparent border-t-accent-gold" />
+      <div className="mb-5 flex items-center gap-1">
+        <span className="font-mono text-sm text-phosphor">&gt;</span>
+        <span className="font-mono text-sm text-text-secondary">{message}</span>
+        <span className="inline-block w-2 h-4 bg-phosphor animate-cursor-blink" />
       </div>
-      <p className="text-sm text-text-muted">{message}</p>
     </div>
   );
 }

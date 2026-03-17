@@ -2,14 +2,12 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 /* ═══════════════════════════════════════════════════════════
-   Landing — Institutional homepage for TrackTheDollar.com
-   9 sections: Nav, Hero, Signal Strip, System, Monetary Proxy,
-   War Proxy, Sources, Research, Footer
+   Landing — Terminal-style homepage for TrackTheDollar.com
    ═══════════════════════════════════════════════════════════ */
 
 export function Landing() {
   return (
-    <div className="min-h-screen bg-surface-0 text-text-primary">
+    <div className="min-h-screen bg-terminal-black text-text-primary">
       <SiteNav />
       <Hero />
       <SignalStrip />
@@ -29,81 +27,54 @@ function SiteNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border-subtle bg-surface-0/95 backdrop-blur-sm">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-terminal-border bg-terminal-black">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-5 sm:px-8">
-        {/* Wordmark */}
-        <Link to="/" className="flex items-center gap-1">
-          <span className="text-[13px] font-bold tracking-[0.18em] uppercase text-text-primary">
-            Track
-          </span>
-          <span className="text-[13px] font-bold tracking-[0.18em] uppercase text-accent-gold">
-            The
-          </span>
-          <span className="text-[13px] font-bold tracking-[0.18em] uppercase text-text-primary">
-            Dollar
+        <Link to="/" className="flex items-center gap-2">
+          <span className="font-mono text-sm font-bold text-phosphor">[$]</span>
+          <span className="text-[13px] font-bold uppercase tracking-[0.18em] text-text-primary">
+            TrackTheDollar
           </span>
         </Link>
 
-        {/* Desktop nav */}
         <div className="hidden items-center gap-8 md:flex">
-          <Link
-            to="/dashboard"
-            className="text-[13px] font-medium text-text-tertiary transition-colors hover:text-text-primary"
-          >
+          <Link to="/dashboard" className="text-[13px] font-medium text-text-tertiary transition-colors hover:text-phosphor">
             Dashboard
           </Link>
-          <Link
-            to="/methodology"
-            className="text-[13px] font-medium text-text-tertiary transition-colors hover:text-text-primary"
-          >
+          <Link to="/methodology" className="text-[13px] font-medium text-text-tertiary transition-colors hover:text-phosphor">
             Methodology
           </Link>
-          <Link
-            to="/source-health"
-            className="text-[13px] font-medium text-text-tertiary transition-colors hover:text-text-primary"
-          >
+          <Link to="/source-health" className="text-[13px] font-medium text-text-tertiary transition-colors hover:text-phosphor">
             Sources
           </Link>
           <Link
             to="/dashboard"
-            className="rounded-md border border-border bg-surface-2 px-4 py-1.5 text-[13px] font-semibold text-text-secondary transition-all hover:border-accent-gold/30 hover:text-text-primary"
+            className="border border-phosphor/40 bg-phosphor-dim px-4 py-1.5 text-[13px] font-semibold uppercase tracking-wider text-phosphor transition-colors hover:border-phosphor hover:bg-phosphor/10"
           >
-            Open Platform
-            <span className="ml-1.5 text-text-muted">&rarr;</span>
+            Open Terminal &rarr;
           </Link>
         </div>
 
-        {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="rounded-md p-2 text-text-tertiary md:hidden"
+          className="p-2 text-text-tertiary md:hidden"
           aria-label="Menu"
         >
           <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20">
             {mobileOpen ? (
-              <path
-                fillRule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
+              <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
             ) : (
-              <path
-                fillRule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clipRule="evenodd"
-              />
+              <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
             )}
           </svg>
         </button>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
-        <div className="border-t border-border-subtle bg-surface-1 px-5 py-4 md:hidden">
+        <div className="border-t border-terminal-border bg-terminal-panel px-5 py-4 md:hidden">
           <div className="flex flex-col gap-3">
-            <Link to="/dashboard" className="text-sm text-text-secondary hover:text-text-primary">Dashboard</Link>
-            <Link to="/methodology" className="text-sm text-text-secondary hover:text-text-primary">Methodology</Link>
-            <Link to="/source-health" className="text-sm text-text-secondary hover:text-text-primary">Sources</Link>
+            <Link to="/dashboard" className="text-sm text-text-secondary hover:text-phosphor">Dashboard</Link>
+            <Link to="/methodology" className="text-sm text-text-secondary hover:text-phosphor">Methodology</Link>
+            <Link to="/source-health" className="text-sm text-text-secondary hover:text-phosphor">Sources</Link>
           </div>
         </div>
       )}
@@ -118,27 +89,26 @@ function Hero() {
     <section className="relative pt-36 pb-24 sm:pt-44 sm:pb-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="max-w-3xl">
-          <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent-gold/70">
-            Macro Intelligence Platform
+          <p className="mb-6 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">
+            <span className="text-phosphor">&gt;</span>
+            Macro Intelligence Terminal
           </p>
 
-          <h1 className="text-[2.75rem] font-bold leading-[1.06] tracking-tight text-text-primary sm:text-[3.5rem] lg:text-[4.25rem]">
-            Track the forces{" "}
-            <span className="text-text-secondary">reshaping</span>
+          <h1 className="text-[2.5rem] font-bold leading-[1.06] tracking-tight sm:text-[3.25rem] lg:text-[4rem]">
+            <span className="text-phosphor">Track the forces</span>
             <br />
-            the dollar system
+            <span className="text-text-secondary">reshaping the dollar system</span>
           </h1>
 
           <p className="mt-7 max-w-lg text-[15px] leading-[1.7] text-text-secondary">
             Debt expansion, monetary pressure, and geopolitical spending
-            flows — monitored through one intelligence terminal.
+            flows — monitored through one terminal.
             Sourced exclusively from official U.S. government data.
           </p>
 
           <div className="mt-12 flex items-center gap-5">
             <Link to="/dashboard" className="btn-primary">
-              Open Dashboard
-              <span className="ml-0.5 text-text-inverse/60">&rarr;</span>
+              Open Dashboard &rarr;
             </Link>
             <Link to="/methodology" className="btn-secondary">
               Methodology
@@ -146,9 +116,7 @@ function Hero() {
           </div>
         </div>
       </div>
-
-      {/* Subtle rule */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-border-subtle" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-terminal-border" />
     </section>
   );
 }
@@ -157,27 +125,19 @@ function Hero() {
 
 function SignalStrip() {
   return (
-    <section className="border-b border-border-subtle">
+    <section className="border-b border-terminal-border">
       <div className="mx-auto max-w-7xl">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-x divide-border-subtle">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-x divide-terminal-border">
           {signals.map((s) => (
             <Link
               key={s.label}
               to={s.to}
-              className="group relative px-5 py-5 transition-colors hover:bg-surface-1 sm:px-6 sm:py-6"
+              className="group relative px-5 py-5 transition-colors hover:bg-terminal-surface sm:px-6 sm:py-6"
             >
-              {/* Top accent line on hover */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-transparent transition-colors group-hover:bg-accent-gold/30" />
-
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">
-                {s.label}
-              </p>
-              <p className="mt-2.5 font-mono text-lg font-semibold tracking-tight text-text-primary sm:text-xl">
-                {s.display}
-              </p>
-              <p className="mt-1.5 text-[11px] text-text-tertiary">
-                {s.source}
-              </p>
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-transparent transition-colors group-hover:bg-phosphor/30" />
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">{s.label}</p>
+              <p className="mt-2.5 font-mono text-lg font-semibold tracking-tight text-phosphor sm:text-xl">{s.display}</p>
+              <p className="mt-1.5 text-[11px] text-text-tertiary">{s.source}</p>
             </Link>
           ))}
         </div>
@@ -190,17 +150,15 @@ function SignalStrip() {
 
 function SystemSection() {
   return (
-    <section className="border-b border-border-subtle py-24 sm:py-32">
+    <section className="border-b border-terminal-border py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-20">
-          {/* Left — editorial text */}
           <div>
             <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">
-              System Architecture
+              <span className="text-phosphor">&gt;</span> System Architecture
             </p>
-            <h2 className="mb-5 text-[1.75rem] font-bold leading-[1.15] tracking-tight text-text-primary sm:text-[2rem]">
-              Five pressure channels
-              <br />
+            <h2 className="mb-5 text-[1.75rem] font-bold leading-[1.15] tracking-tight sm:text-[2rem]">
+              <span className="text-text-primary">Five pressure channels</span><br />
               <span className="text-text-secondary">drive the dollar system</span>
             </h2>
             <p className="max-w-md text-[15px] leading-[1.7] text-text-secondary">
@@ -209,27 +167,17 @@ function SystemSection() {
             </p>
           </div>
 
-          {/* Right — structured flow */}
-          <div className="space-y-0 divide-y divide-border-subtle border-t border-border-subtle lg:border-t">
+          <div className="divide-y divide-terminal-border border-t border-terminal-border">
             {systemChannels.map((ch, i) => (
-              <div
-                key={ch.name}
-                className="flex items-start gap-5 py-5 sm:gap-6"
-              >
-                <span className="mt-0.5 w-6 text-center font-mono text-xs font-medium text-text-muted">
+              <div key={ch.name} className="flex items-start gap-5 py-5 sm:gap-6">
+                <span className="mt-0.5 w-6 text-center font-mono text-xs font-medium text-phosphor/50">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-text-primary">
-                    {ch.name}
-                  </p>
-                  <p className="mt-1 text-[13px] leading-relaxed text-text-tertiary">
-                    {ch.description}
-                  </p>
+                  <p className="text-sm font-semibold text-text-primary">{ch.name}</p>
+                  <p className="mt-1 text-[13px] leading-relaxed text-text-tertiary">{ch.description}</p>
                 </div>
-                <span className="hidden shrink-0 text-[11px] font-medium text-text-muted sm:block">
-                  {ch.source}
-                </span>
+                <span className="hidden shrink-0 text-[11px] font-medium text-phosphor/40 sm:block">{ch.source}</span>
               </div>
             ))}
           </div>
@@ -243,15 +191,12 @@ function SystemSection() {
 
 function MonetaryProxySection() {
   return (
-    <section className="border-b border-border-subtle py-24 sm:py-32">
+    <section className="border-b border-terminal-border py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-5 lg:gap-16">
-          {/* Explanation */}
           <div className="lg:col-span-2">
             <div className="mb-4 flex items-center gap-3">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">
-                Derived Metric
-              </p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">Derived Metric</p>
               <span className="badge badge-proxy">Proxy</span>
             </div>
             <h2 className="mb-5 text-[1.5rem] font-bold leading-[1.2] tracking-tight text-text-primary sm:text-[1.75rem]">
@@ -266,67 +211,41 @@ function MonetaryProxySection() {
               Not an official statistic. Derived estimate with documented
               methodology and disclosed limitations.
             </p>
-
             <div className="mt-8 flex gap-2">
-              <span className="rounded-md border border-border bg-surface-2 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-text-tertiary">
-                Composite Index
-              </span>
-              <span className="rounded-md border border-border bg-surface-2 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-text-tertiary">
-                4 Components
-              </span>
+              <span className="border border-terminal-border bg-terminal-surface px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-text-tertiary">Composite Index</span>
+              <span className="border border-terminal-border bg-terminal-surface px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-text-tertiary">4 Components</span>
             </div>
-
             <div className="mt-8">
-              <Link
-                to="/monetary-expansion-proxy"
-                className="text-[13px] font-semibold text-text-secondary transition-colors hover:text-text-primary"
-              >
+              <Link to="/monetary-expansion-proxy" className="text-[13px] font-semibold text-phosphor/70 transition-colors hover:text-phosphor">
                 View full methodology &rarr;
               </Link>
             </div>
           </div>
 
-          {/* Chart container */}
           <div className="lg:col-span-3">
-            <div className="rounded-md border border-border-subtle bg-surface-1 p-6 sm:p-8">
+            <div className="border border-terminal-border bg-terminal-surface p-6 sm:p-8">
               <div className="mb-6 flex items-center justify-between">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-tertiary">
-                  Monetary Expansion Proxy
-                </span>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-tertiary">Monetary Expansion Proxy</span>
                 <span className="font-mono text-[10px] text-text-muted">12-month view</span>
               </div>
-
-              {/* Chart placeholder — clean axis frame */}
-              <div className="relative h-52 border-b border-l border-border-subtle">
+              <div className="relative h-52 border-b border-l border-terminal-border">
                 <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-[3px] px-3 pb-1">
                   {proxyChartBars.map((h, i) => (
-                    <div
-                      key={i}
-                      className="flex-1 rounded-sm bg-surface-4 transition-colors"
-                      style={{ height: `${h}%` }}
-                    />
+                    <div key={i} className="flex-1 bg-phosphor/20" style={{ height: `${h}%` }} />
                   ))}
                 </div>
-                {/* Y-axis labels */}
                 <div className="absolute -left-1 top-0 flex h-full flex-col justify-between py-1">
                   <span className="font-mono text-[9px] text-text-muted">100</span>
                   <span className="font-mono text-[9px] text-text-muted">50</span>
                   <span className="font-mono text-[9px] text-text-muted">0</span>
                 </div>
               </div>
-
               <div className="mt-3 flex items-center justify-between">
-                <span className="font-mono text-[10px] text-text-muted">
-                  12mo ago
-                </span>
-                <span className="font-mono text-[10px] text-text-muted">
-                  Present
-                </span>
+                <span className="font-mono text-[10px] text-text-muted">12mo ago</span>
+                <span className="font-mono text-[10px] text-text-muted">Present</span>
               </div>
-
               <p className="mt-5 text-[11px] leading-relaxed text-text-muted">
-                Live data available on the dashboard. Sources: Federal Reserve,
-                Treasury, FRED.
+                Live data available on the dashboard. Sources: Federal Reserve, Treasury, FRED.
               </p>
             </div>
           </div>
@@ -340,46 +259,36 @@ function MonetaryProxySection() {
 
 function WarProxySection() {
   return (
-    <section className="border-b border-border-subtle py-24 sm:py-32">
+    <section className="border-b border-terminal-border py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-5 lg:gap-16">
-          {/* Data display */}
           <div className="order-2 lg:order-1 lg:col-span-3">
-            <div className="rounded-md border border-border-subtle bg-surface-1 p-6 sm:p-8">
-              <div className="mb-6 flex items-center justify-between">
+            <div className="border border-terminal-border bg-terminal-surface p-6 sm:p-8">
+              <div className="mb-6">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-tertiary">
                   War Spending Proxy — Component Weights
                 </span>
               </div>
-
-              {/* Component table */}
-              <div className="divide-y divide-border-subtle">
+              <div className="divide-y divide-terminal-border">
                 {warComponents.map((c) => (
                   <div key={c.name} className="flex items-center justify-between py-4">
                     <div>
                       <p className="text-sm font-medium text-text-primary">{c.name}</p>
                       <p className="mt-0.5 text-[11px] text-text-tertiary">{c.source}</p>
                     </div>
-                    <div className="text-right">
-                      <p className="font-mono text-sm font-semibold tabular-nums text-text-primary">{c.weight}</p>
-                    </div>
+                    <p className="font-mono text-sm font-semibold tabular-nums text-phosphor">{c.weight}</p>
                   </div>
                 ))}
               </div>
-
               <p className="mt-6 text-[11px] leading-relaxed text-text-muted">
-                All components sourced from USAspending.gov and
-                foreignassistance.gov. Updated on their published schedules.
+                All components sourced from USAspending.gov and foreignassistance.gov.
               </p>
             </div>
           </div>
 
-          {/* Explanation */}
           <div className="order-1 lg:order-2 lg:col-span-2">
             <div className="mb-4 flex items-center gap-3">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">
-                Derived Metric
-              </p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">Derived Metric</p>
               <span className="badge badge-proxy">Proxy</span>
             </div>
             <h2 className="mb-5 text-[1.5rem] font-bold leading-[1.2] tracking-tight text-text-primary sm:text-[1.75rem]">
@@ -394,12 +303,8 @@ function WarProxySection() {
               Not an official defense spending tracker. Derived estimate
               combining multiple official data sources with documented methodology.
             </p>
-
             <div className="mt-8">
-              <Link
-                to="/war-spending-proxy"
-                className="text-[13px] font-semibold text-text-secondary transition-colors hover:text-text-primary"
-              >
+              <Link to="/war-spending-proxy" className="text-[13px] font-semibold text-phosphor/70 transition-colors hover:text-phosphor">
                 View full methodology &rarr;
               </Link>
             </div>
@@ -414,11 +319,11 @@ function WarProxySection() {
 
 function SourcesSection() {
   return (
-    <section className="border-b border-border-subtle py-24 sm:py-32">
+    <section className="border-b border-terminal-border py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="mb-14 max-w-xl">
           <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">
-            Data Provenance
+            <span className="text-phosphor">&gt;</span> Data Provenance
           </p>
           <h2 className="mb-5 text-[1.75rem] font-bold leading-[1.15] tracking-tight text-text-primary sm:text-[2rem]">
             Official sources only
@@ -430,36 +335,24 @@ function SourcesSection() {
           </p>
         </div>
 
-        <div className="grid gap-px bg-border-subtle sm:grid-cols-2 lg:grid-cols-3 rounded-md overflow-hidden">
+        <div className="grid gap-px bg-terminal-border sm:grid-cols-2 lg:grid-cols-3 overflow-hidden">
           {sources.map((src) => (
-            <div
-              key={src.name}
-              className="bg-surface-0 p-7 sm:p-8"
-            >
+            <div key={src.name} className="bg-terminal-black p-7 sm:p-8">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-[13px] font-semibold text-text-primary">
-                  {src.name}
-                </h3>
+                <h3 className="text-[13px] font-semibold text-text-primary">{src.name}</h3>
                 <div className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-data-positive" />
-                  <span className="text-[10px] font-medium text-text-muted">Active</span>
+                  <span className="h-1.5 w-1.5 bg-phosphor shadow-glow" />
+                  <span className="text-[10px] font-medium text-phosphor/60">ACTIVE</span>
                 </div>
               </div>
-              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-text-muted">
-                {src.agency}
-              </p>
-              <p className="text-[13px] leading-[1.65] text-text-tertiary">
-                {src.description}
-              </p>
+              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-text-muted">{src.agency}</p>
+              <p className="text-[13px] leading-[1.65] text-text-tertiary">{src.description}</p>
             </div>
           ))}
         </div>
 
         <div className="mt-10 text-center">
-          <Link
-            to="/source-health"
-            className="text-[13px] font-semibold text-text-secondary transition-colors hover:text-text-primary"
-          >
+          <Link to="/source-health" className="text-[13px] font-semibold text-phosphor/70 transition-colors hover:text-phosphor">
             View source health dashboard &rarr;
           </Link>
         </div>
@@ -468,49 +361,38 @@ function SourcesSection() {
   );
 }
 
-/* ─── 8. Research / Briefings Preview ─── */
+/* ─── 8. Research ─── */
 
 function ResearchSection() {
   return (
-    <section className="border-b border-border-subtle py-24 sm:py-32">
+    <section className="border-b border-terminal-border py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <div>
             <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">
-              Intelligence Briefings
+              <span className="text-phosphor">&gt;</span> Intelligence Briefings
             </p>
             <h2 className="mb-5 text-[1.75rem] font-bold leading-[1.15] tracking-tight text-text-primary sm:text-[2rem]">
               Research &amp; analysis
             </h2>
             <p className="text-[15px] leading-[1.7] text-text-secondary">
               Structured briefings on macro regime shifts, dollar system stress
-              tests, and methodology updates. Written for institutional
-              audiences.
+              tests, and methodology updates. Written for institutional audiences.
             </p>
           </div>
 
-          <div className="space-y-0">
+          <div>
             {briefings.map((b, i) => (
-              <div
-                key={b.title}
-                className={`flex items-start gap-5 py-5 ${
-                  i < briefings.length - 1 ? "border-b border-border-subtle" : ""
-                }`}
-              >
-                <span className="mt-0.5 shrink-0 rounded border border-border bg-surface-2 px-2 py-0.5 font-mono text-[10px] font-medium text-text-muted">
+              <div key={b.title} className={`flex items-start gap-5 py-5 ${i < briefings.length - 1 ? "border-b border-terminal-border" : ""}`}>
+                <span className="mt-0.5 shrink-0 border border-amber/30 bg-amber-dim px-2 py-0.5 font-mono text-[10px] font-medium text-amber">
                   {b.date}
                 </span>
                 <div className="min-w-0">
-                  <p className="text-sm font-medium leading-snug text-text-primary">
-                    {b.title}
-                  </p>
-                  <p className="mt-1.5 text-[12px] text-text-tertiary">
-                    {b.category}
-                  </p>
+                  <p className="text-sm font-medium leading-snug text-text-primary">{b.title}</p>
+                  <p className="mt-1.5 text-[12px] text-text-tertiary">{b.category}</p>
                 </div>
               </div>
             ))}
-
             <p className="pt-5 text-[12px] text-text-muted">
               Briefings publishing soon. Platform currently in data-only mode.
             </p>
@@ -528,53 +410,40 @@ function SiteFooter() {
     <footer className="py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-12 sm:grid-cols-3">
-          {/* Col 1 — Brand */}
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-text-tertiary">
-              TrackTheDollar
+              <span className="text-phosphor">[$]</span> TrackTheDollar
             </p>
             <p className="mt-4 text-[13px] leading-[1.7] text-text-muted">
-              Macro intelligence platform. Official government data
+              Macro intelligence terminal. Official government data
               with full methodology transparency.
             </p>
           </div>
-
-          {/* Col 2 — Platform */}
           <div>
-            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">
-              Platform
-            </p>
+            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">Platform</p>
             <div className="flex flex-col gap-2.5">
-              <Link to="/dashboard" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Dashboard</Link>
-              <Link to="/dollar-strength" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Dollar Strength</Link>
-              <Link to="/debt" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">National Debt</Link>
-              <Link to="/inflation" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Inflation</Link>
-              <Link to="/rates" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Interest Rates</Link>
+              <Link to="/dashboard" className="text-[13px] text-text-tertiary transition-colors hover:text-phosphor">Dashboard</Link>
+              <Link to="/dollar-strength" className="text-[13px] text-text-tertiary transition-colors hover:text-phosphor">Dollar Strength</Link>
+              <Link to="/debt" className="text-[13px] text-text-tertiary transition-colors hover:text-phosphor">National Debt</Link>
+              <Link to="/inflation" className="text-[13px] text-text-tertiary transition-colors hover:text-phosphor">Inflation</Link>
+              <Link to="/rates" className="text-[13px] text-text-tertiary transition-colors hover:text-phosphor">Interest Rates</Link>
             </div>
           </div>
-
-          {/* Col 3 — Transparency */}
           <div>
-            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">
-              Transparency
-            </p>
+            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">Transparency</p>
             <div className="flex flex-col gap-2.5">
-              <Link to="/methodology" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Methodology</Link>
-              <Link to="/source-health" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Source Health</Link>
-              <Link to="/monetary-expansion-proxy" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Monetary Proxy</Link>
-              <Link to="/war-spending-proxy" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">War Spending Proxy</Link>
+              <Link to="/methodology" className="text-[13px] text-text-tertiary transition-colors hover:text-phosphor">Methodology</Link>
+              <Link to="/source-health" className="text-[13px] text-text-tertiary transition-colors hover:text-phosphor">Source Health</Link>
+              <Link to="/monetary-expansion-proxy" className="text-[13px] text-text-tertiary transition-colors hover:text-phosphor">Monetary Proxy</Link>
+              <Link to="/war-spending-proxy" className="text-[13px] text-text-tertiary transition-colors hover:text-phosphor">War Spending Proxy</Link>
             </div>
           </div>
         </div>
-
-        <div className="mt-16 border-t border-border-subtle pt-8">
+        <div className="mt-16 border-t border-terminal-border pt-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-[11px] text-text-muted">
-              &copy; {new Date().getFullYear()} TrackTheDollar.com
-            </p>
+            <p className="text-[11px] text-text-muted">&copy; {new Date().getFullYear()} TrackTheDollar.com</p>
             <p className="max-w-md text-[11px] leading-relaxed text-text-muted sm:text-right">
-              Not investment advice. All data from official U.S. government
-              agencies. Proxy metrics are derived estimates, not official statistics.
+              Not investment advice. All data from official U.S. government agencies. Proxy metrics are derived estimates.
             </p>
           </div>
         </div>
@@ -597,31 +466,11 @@ const signals = [
 ];
 
 const systemChannels = [
-  {
-    name: "Interest Rates",
-    description: "Fed Funds rate and Treasury yield curve set the price of money",
-    source: "FRED",
-  },
-  {
-    name: "Debt Issuance",
-    description: "Treasury borrowing velocity and outstanding obligations",
-    source: "Treasury Fiscal Data",
-  },
-  {
-    name: "Liquidity & Money Supply",
-    description: "M2, Fed balance sheet, and reserve balances drive system liquidity",
-    source: "Federal Reserve",
-  },
-  {
-    name: "Inflation Pressure",
-    description: "CPI, core inflation, and breakeven expectations signal price regime",
-    source: "BLS / FRED",
-  },
-  {
-    name: "Global Dollar Demand",
-    description: "Broad Dollar Index measures relative strength against trading partners",
-    source: "FRED",
-  },
+  { name: "Interest Rates", description: "Fed Funds rate and Treasury yield curve set the price of money", source: "FRED" },
+  { name: "Debt Issuance", description: "Treasury borrowing velocity and outstanding obligations", source: "Treasury Fiscal Data" },
+  { name: "Liquidity & Money Supply", description: "M2, Fed balance sheet, and reserve balances drive system liquidity", source: "Federal Reserve" },
+  { name: "Inflation Pressure", description: "CPI, core inflation, and breakeven expectations signal price regime", source: "BLS / FRED" },
+  { name: "Global Dollar Demand", description: "Broad Dollar Index measures relative strength against trading partners", source: "FRED" },
 ];
 
 const proxyChartBars = [35, 42, 38, 55, 48, 62, 58, 70, 65, 72, 68, 75, 60, 78, 72, 80, 74, 68, 82, 76, 70, 85, 78, 72];
@@ -634,52 +483,16 @@ const warComponents = [
 ];
 
 const sources = [
-  {
-    name: "FRED",
-    agency: "Federal Reserve Bank of St. Louis",
-    description: "Dollar index, Fed funds rate, Treasury yields, M2, breakeven inflation rates.",
-  },
-  {
-    name: "Treasury Fiscal Data",
-    agency: "U.S. Department of the Treasury",
-    description: "Debt to the Penny, Daily Treasury Statement, Monthly Treasury Statement.",
-  },
-  {
-    name: "Federal Reserve",
-    agency: "Board of Governors",
-    description: "Balance sheet assets, reserve balances, and monetary policy data.",
-  },
-  {
-    name: "USAspending",
-    agency: "U.S. Department of the Treasury",
-    description: "DoD budgetary resources, obligations, outlays, and contract awards.",
-  },
-  {
-    name: "Foreign Assistance",
-    agency: "USAID / State Department",
-    description: "Foreign assistance obligations and disbursements, security sector data.",
-  },
-  {
-    name: "BLS",
-    agency: "Bureau of Labor Statistics",
-    description: "Consumer Price Index — all items and core, monthly releases.",
-  },
+  { name: "FRED", agency: "Federal Reserve Bank of St. Louis", description: "Dollar index, Fed funds rate, Treasury yields, M2, breakeven inflation rates." },
+  { name: "Treasury Fiscal Data", agency: "U.S. Department of the Treasury", description: "Debt to the Penny, Daily Treasury Statement, Monthly Treasury Statement." },
+  { name: "Federal Reserve", agency: "Board of Governors", description: "Balance sheet assets, reserve balances, and monetary policy data." },
+  { name: "USAspending", agency: "U.S. Department of the Treasury", description: "DoD budgetary resources, obligations, outlays, and contract awards." },
+  { name: "Foreign Assistance", agency: "USAID / State Department", description: "Foreign assistance obligations and disbursements, security sector data." },
+  { name: "BLS", agency: "Bureau of Labor Statistics", description: "Consumer Price Index — all items and core, monthly releases." },
 ];
 
 const briefings = [
-  {
-    date: "Coming",
-    title: "Dollar Index Regime Analysis: Current Cycle Position",
-    category: "Dollar System",
-  },
-  {
-    date: "Coming",
-    title: "Debt Acceleration and Yield Curve Implications",
-    category: "Fiscal Pressure",
-  },
-  {
-    date: "Coming",
-    title: "Proxy Methodology Update: Component Weight Review",
-    category: "Methodology",
-  },
+  { date: "Coming", title: "Dollar Index Regime Analysis: Current Cycle Position", category: "Dollar System" },
+  { date: "Coming", title: "Debt Acceleration and Yield Curve Implications", category: "Fiscal Pressure" },
+  { date: "Coming", title: "Proxy Methodology Update: Component Weight Review", category: "Methodology" },
 ];

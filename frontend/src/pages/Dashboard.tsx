@@ -78,7 +78,7 @@ export function Dashboard() {
                   )}
                 </div>
               )}
-              <TimeSeriesChart observations={data.series.dollar.observations} unit="index" color="#5b8def" height={200} />
+              <TimeSeriesChart observations={data.series.dollar.observations} unit="index" color="#00ff41" height={200} />
             </div>
 
             <div className="card">
@@ -102,7 +102,7 @@ export function Dashboard() {
                   )}
                 </div>
               )}
-              <TimeSeriesChart observations={data.series.debt.observations} unit="usd" color="#f87171" height={200} />
+              <TimeSeriesChart observations={data.series.debt.observations} unit="usd" color="#ff3333" height={200} />
             </div>
 
             <div className="card">
@@ -126,7 +126,7 @@ export function Dashboard() {
                   )}
                 </div>
               )}
-              <TimeSeriesChart observations={data.series.inflation.observations} unit="index" color="#d4944e" height={200} />
+              <TimeSeriesChart observations={data.series.inflation.observations} unit="index" color="#ffb000" height={200} />
             </div>
           </div>
         </>

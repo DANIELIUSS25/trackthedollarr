@@ -46,17 +46,17 @@ export function Debt() {
               series={[
                 {
                   observations: data.totalDebt.observations,
-                  color: "#f87171",
+                  color: "#ff3333",
                   name: "Total Debt",
                 },
                 {
                   observations: data.debtHeldByPublic.observations,
-                  color: "#5b8def",
+                  color: "#00ff41",
                   name: "Public Holdings",
                 },
                 {
                   observations: data.intragovernmental.observations,
-                  color: "#a78bfa",
+                  color: "#aa66ff",
                   name: "Intragovernmental",
                 },
               ]}
@@ -72,8 +72,8 @@ export function Debt() {
 
           {/* Individual series + velocity metric */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <SeriesCard payload={data.totalDebt} color="#f87171" compact />
-            <SeriesCard payload={data.debtHeldByPublic} color="#5b8def" compact />
+            <SeriesCard payload={data.totalDebt} color="#ff3333" compact />
+            <SeriesCard payload={data.debtHeldByPublic} color="#00ff41" compact />
             <MetricCard metric={data.debtGrowthVelocity} />
           </div>
         </>

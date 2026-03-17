@@ -42,9 +42,9 @@ export function Rates() {
             </div>
             <MultiSeriesChart
               series={[
-                { observations: data.fedFunds.observations, color: "#c9a94e", name: "Fed Funds" },
-                { observations: data.treasury2y.observations, color: "#5b8def", name: "2Y Treasury" },
-                { observations: data.treasury10y.observations, color: "#f87171", name: "10Y Treasury" },
+                { observations: data.fedFunds.observations, color: "#ffb000", name: "Fed Funds" },
+                { observations: data.treasury2y.observations, color: "#00ff41", name: "2Y Treasury" },
+                { observations: data.treasury10y.observations, color: "#ff3333", name: "10Y Treasury" },
               ]}
               unit="percent"
               height={340}
@@ -57,9 +57,9 @@ export function Rates() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
-            <SeriesCard payload={data.fedFunds} color="#c9a94e" compact />
-            <SeriesCard payload={data.treasury2y} color="#5b8def" compact />
-            <SeriesCard payload={data.treasury10y} color="#f87171" compact />
+            <SeriesCard payload={data.fedFunds} color="#ffb000" compact />
+            <SeriesCard payload={data.treasury2y} color="#00ff41" compact />
+            <SeriesCard payload={data.treasury10y} color="#ff3333" compact />
           </div>
         </>
       )}

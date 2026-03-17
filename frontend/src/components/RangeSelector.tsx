@@ -26,14 +26,14 @@ export function RangeSelector({ value, onChange, compact }: RangeSelectorProps) 
     : ranges;
 
   return (
-    <div className="inline-flex rounded-lg border border-border-subtle bg-surface-2/50 p-0.5 backdrop-blur-sm">
+    <div className="inline-flex border border-terminal-border bg-terminal-surface p-0.5">
       {items.map((r) => (
         <button
           key={r.value}
           onClick={() => onChange(r.value)}
-          className={`relative rounded-md px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
+          className={`px-3 py-1.5 text-xs font-medium transition-colors duration-150 ${
             value === r.value
-              ? "bg-accent-gold-dim text-accent-gold shadow-sm"
+              ? "bg-phosphor-dim text-phosphor"
               : "text-text-muted hover:text-text-secondary"
           }`}
         >

@@ -42,9 +42,9 @@ export function Inflation() {
             </div>
             <MultiSeriesChart
               series={[
-                { observations: data.cpi.observations, color: "#d4944e", name: "CPI All Items" },
-                { observations: data.coreCpi.observations, color: "#5b8def", name: "Core CPI" },
-                { observations: data.breakeven5y.observations, color: "#a78bfa", name: "5Y Breakeven" },
+                { observations: data.cpi.observations, color: "#ffb000", name: "CPI All Items" },
+                { observations: data.coreCpi.observations, color: "#00ff41", name: "Core CPI" },
+                { observations: data.breakeven5y.observations, color: "#aa66ff", name: "5Y Breakeven" },
               ]}
               unit={data.cpi.series.unit}
               height={340}
@@ -57,9 +57,9 @@ export function Inflation() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
-            <SeriesCard payload={data.cpi} color="#d4944e" compact />
-            <SeriesCard payload={data.coreCpi} color="#5b8def" compact />
-            <SeriesCard payload={data.breakeven5y} color="#a78bfa" compact />
+            <SeriesCard payload={data.cpi} color="#ffb000" compact />
+            <SeriesCard payload={data.coreCpi} color="#00ff41" compact />
+            <SeriesCard payload={data.breakeven5y} color="#aa66ff" compact />
           </div>
         </>
       )}

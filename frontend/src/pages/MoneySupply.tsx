@@ -42,9 +42,9 @@ export function MoneySupply() {
             </div>
             <MultiSeriesChart
               series={[
-                { observations: data.m2.observations, color: "#5b8def", name: "M2" },
-                { observations: data.fedAssets.observations, color: "#c9a94e", name: "Fed Assets" },
-                { observations: data.reserveBalances.observations, color: "#a78bfa", name: "Reserves" },
+                { observations: data.m2.observations, color: "#00ff41", name: "M2" },
+                { observations: data.fedAssets.observations, color: "#ffb000", name: "Fed Assets" },
+                { observations: data.reserveBalances.observations, color: "#aa66ff", name: "Reserves" },
               ]}
               unit={data.m2.series.unit}
               height={340}
@@ -57,9 +57,9 @@ export function MoneySupply() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
-            <SeriesCard payload={data.m2} color="#5b8def" compact />
-            <SeriesCard payload={data.fedAssets} color="#c9a94e" compact />
-            <SeriesCard payload={data.reserveBalances} color="#a78bfa" compact />
+            <SeriesCard payload={data.m2} color="#00ff41" compact />
+            <SeriesCard payload={data.fedAssets} color="#ffb000" compact />
+            <SeriesCard payload={data.reserveBalances} color="#aa66ff" compact />
           </div>
         </>
       )}
