@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #252d4a #0a0e17;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0e17;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #252d4a;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #313b5e;
+  }
+
+  ::selection {
+    background-color: rgba(197, 164, 78, 0.25);
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-lg border border-border-subtle bg-surface-2 p-5;
+  }
+
+  .card-header {
+    @apply mb-4 flex items-center justify-between;
+  }
+
+  .card-title {
+    @apply text-sm font-semibold uppercase tracking-wider text-text-secondary;
+  }
+
+  .metric-value {
+    @apply font-mono text-2xl font-semibold text-text-primary;
+  }
+
+  .metric-value-lg {
+    @apply font-mono text-4xl font-bold text-text-primary;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs font-medium;
+  }
+
+  .badge-fresh {
+    @apply bg-data-positive/15 text-data-positive;
+  }
+
+  .badge-stale {
+    @apply bg-data-warning/15 text-data-warning;
+  }
+
+  .badge-proxy {
+    @apply bg-accent-purple/15 text-accent-purple;
+  }
+
+  .badge-unknown {
+    @apply bg-data-neutral/15 text-data-neutral;
+  }
+
+  .section-heading {
+    @apply text-lg font-semibold text-text-primary;
+  }
+
+  .page-title {
+    @apply text-2xl font-bold tracking-tight text-text-primary;
+  }
+
+  .page-subtitle {
+    @apply mt-1 text-sm text-text-secondary;
+  }
+
+  .disclosure-box {
+    @apply rounded-md border border-accent-purple/20 bg-accent-purple/5 px-4 py-3 text-sm text-text-secondary;
+  }
+
+  .warning-box {
+    @apply rounded-md border border-data-warning/20 bg-data-warning/5 px-4 py-3 text-sm text-data-warning;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-md bg-accent-gold px-5 py-2.5 text-sm font-semibold text-text-inverse transition-colors hover:bg-accent-gold-bright focus:outline-none focus:ring-2 focus:ring-accent-gold/50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 rounded-md border border-border bg-surface-3 px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-surface-4 hover:text-text-primary;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-surface-3 hover:text-text-primary;
+  }
+
+  .nav-link-active {
+    @apply bg-surface-3 text-accent-gold;
+  }
+}

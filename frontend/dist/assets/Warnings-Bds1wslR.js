@@ -1,0 +1,1 @@
+import{j as r}from"./index-DV_cMnbd.js";function i({warnings:n}){return n.length?r.jsx("div",{className:"space-y-2",children:n.map((s,e)=>r.jsx("div",{className:"warning-box",children:s},e))}):null}export{i as W};

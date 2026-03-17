@@ -1,0 +1,402 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SourceKind {
+  FRED
+  TREASURY_FISCAL_DATA
+  FEDERAL_RESERVE
+  USASPENDING
+  FOREIGN_ASSISTANCE
+  BLS
+  BEA
+}
+
+enum SourceStatus {
+  ACTIVE
+  DEGRADED
+  DISABLED
+}
+
+enum AuthType {
+  NONE
+  QUERY_API_KEY
+  HEADER_API_KEY
+  BEARER
+}
+
+enum Frequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  ANNUAL
+  IRREGULAR
+  INTRADAY
+}
+
+enum ValueType {
+  NUMERIC
+  TEXT
+  JSON
+}
+
+enum ObservationStatus {
+  PRELIMINARY
+  FINAL
+  REVISED
+}
+
+enum IngestRunStatus {
+  RUNNING
+  SUCCEEDED
+  PARTIAL_FAILED
+  FAILED
+  CANCELLED
+}
+
+enum IngestRunTrigger {
+  SCHEDULED
+  MANUAL
+  BACKFILL
+  STARTUP
+}
+
+enum IngestEventLevel {
+  INFO
+  WARN
+  ERROR
+}
+
+enum SyncMode {
+  INCREMENTAL
+  FULL
+}
+
+enum FreshnessStatus {
+  FRESH
+  STALE
+  UNKNOWN
+}
+
+enum MetricKind {
+  DELTA
+  ROLLING_AVERAGE
+  ANNUALIZED_CHANGE
+  Z_SCORE
+  PERCENTILE
+  VELOCITY
+  COMPOSITE_PROXY
+}
+
+enum CacheScope {
+  SOURCE
+  ENDPOINT
+  DERIVED_METRIC
+  INTERNAL
+}
+
+enum AdminAction {
+  MANUAL_REFRESH
+  CACHE_INVALIDATE
+  SOURCE_HEALTH_INSPECT
+  INGEST_RUN_INSPECT
+  STALE_DATA_INSPECT
+  FRESHNESS_REFRESH
+  SYSTEM_DIAGNOSTIC
+}
+
+model DataSource {
+  id                   String         @id @default(cuid())
+  slug                 String         @unique
+  name                 String
+  kind                 SourceKind
+  status               SourceStatus   @default(ACTIVE)
+  baseUrl              String
+  authType             AuthType       @default(NONE)
+  timeoutMs            Int            @default(15000)
+  rateLimitPerMinute   Int?
+  updateFrequency      Frequency?
+  expectedLatencyHours Int?
+  staleAfterHours      Int?
+  tags                 String[]
+  metadata             Json?
+  lastAttemptedSyncAt  DateTime?
+  lastSuccessfulSyncAt DateTime?
+  lastHealthyAt        DateTime?
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  datasets             Dataset[]
+  ingestRuns           IngestRun[]
+  sourceHealth         SourceHealth[]
+
+  @@index([kind, status])
+}
+
+model MethodologyNote {
+  id                String                    @id @default(cuid())
+  slug              String                    @unique
+  title             String
+  summary           String
+  contentMarkdown   String
+  disclosure        String?
+  limitations       String?
+  version           Int                       @default(1)
+  effectiveAt       DateTime                  @default(now())
+  retiredAt         DateTime?
+  tags              String[]
+  metadata          Json?
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+  datasets          Dataset[]
+  series            Series[]
+  metricDefinitions DerivedMetricDefinition[]
+}
+
+model Dataset {
+  id                   String           @id @default(cuid())
+  dataSourceId         String
+  methodologyNoteId    String?
+  slug                 String
+  name                 String
+  description          String
+  category             String
+  apiPath              String?
+  sourcePageUrl        String
+  updateFrequency      Frequency
+  valueType            ValueType        @default(NUMERIC)
+  staleAfterHours      Int?
+  expectedLatencyHours Int?
+  tags                 String[]
+  metadata             Json?
+  lastAttemptedSyncAt  DateTime?
+  lastSuccessfulSyncAt DateTime?
+  freshnessStatus      FreshnessStatus  @default(UNKNOWN)
+  isActive             Boolean          @default(true)
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  dataSource           DataSource       @relation(fields: [dataSourceId], references: [id], onDelete: Cascade)
+  methodologyNote      MethodologyNote? @relation(fields: [methodologyNoteId], references: [id], onDelete: SetNull)
+  series               Series[]
+  ingestRuns           IngestRun[]
+
+  @@unique([dataSourceId, slug])
+  @@index([category, isActive])
+}
+
+model Series {
+  id                   String           @id @default(cuid())
+  datasetId            String
+  methodologyNoteId    String?
+  slug                 String           @unique
+  sourceCode           String
+  name                 String
+  description          String
+  unit                 String
+  frequency            Frequency
+  category             String
+  valueType            ValueType        @default(NUMERIC)
+  sourcePageUrl        String
+  tags                 String[]
+  metadata             Json?
+  lastObservationAt    DateTime?
+  lastAttemptedSyncAt  DateTime?
+  lastSuccessfulSyncAt DateTime?
+  freshnessStatus      FreshnessStatus  @default(UNKNOWN)
+  staleAfterHours      Int?
+  isActive             Boolean          @default(true)
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  dataset              Dataset          @relation(fields: [datasetId], references: [id], onDelete: Cascade)
+  methodologyNote      MethodologyNote? @relation(fields: [methodologyNoteId], references: [id], onDelete: SetNull)
+  observations         Observation[]
+
+  @@unique([datasetId, sourceCode])
+  @@index([category, frequency])
+}
+
+model Observation {
+  id                   String            @id @default(cuid())
+  seriesId             String
+  ingestRunId          String?
+  observedAt           DateTime
+  numericValue         Decimal?          @db.Decimal(24, 8)
+  textValue            String?
+  jsonValue            Json?
+  valueStatus          ObservationStatus @default(FINAL)
+  revisionOrdinal      Int               @default(1)
+  isLatestRevision     Boolean           @default(true)
+  sourceObservationKey String?
+  sourcePublishedAt    DateTime?
+  sourceUpdatedAt      DateTime?
+  sourceUrl            String
+  sourceUnit           String?
+  sourceFrequency      Frequency?
+  stale                Boolean           @default(false)
+  warnings             String[]
+  metadata             Json?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  series               Series            @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+  ingestRun            IngestRun?        @relation(fields: [ingestRunId], references: [id], onDelete: SetNull)
+
+  @@unique([seriesId, observedAt, revisionOrdinal])
+  @@index([seriesId, observedAt(sort: Desc), isLatestRevision])
+  @@index([sourceObservationKey])
+}
+
+model DerivedMetricDefinition {
+  id                String                    @id @default(cuid())
+  methodologyNoteId String?
+  slug              String                    @unique
+  name              String
+  description       String
+  category          String
+  kind              MetricKind
+  unit              String
+  frequency         Frequency
+  formula           String
+  dependencies      Json
+  isProxy           Boolean                   @default(false)
+  displayWarning    String?
+  lowerBound        Decimal?                  @db.Decimal(24, 8)
+  upperBound        Decimal?                  @db.Decimal(24, 8)
+  tags              String[]
+  metadata          Json?
+  isActive          Boolean                   @default(true)
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+  methodologyNote   MethodologyNote?          @relation(fields: [methodologyNoteId], references: [id], onDelete: SetNull)
+  snapshots         DerivedMetricSnapshot[]
+}
+
+model DerivedMetricSnapshot {
+  id                  String                  @id @default(cuid())
+  definitionId        String
+  sourceRunId         String?
+  asOf                DateTime
+  value               Decimal?                @db.Decimal(24, 8)
+  payload             Json?
+  freshnessStatus     FreshnessStatus         @default(UNKNOWN)
+  stale               Boolean                 @default(false)
+  methodologyVersion  Int                     @default(1)
+  sourceTimestamps    Json?
+  warnings            String[]
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+  definition          DerivedMetricDefinition @relation(fields: [definitionId], references: [id], onDelete: Cascade)
+  sourceRun           IngestRun?              @relation(fields: [sourceRunId], references: [id], onDelete: SetNull)
+
+  @@unique([definitionId, asOf])
+  @@index([asOf(sort: Desc), freshnessStatus])
+}
+
+model IngestRun {
+  id                 String           @id @default(cuid())
+  dataSourceId       String
+  datasetId          String?
+  trigger            IngestRunTrigger
+  syncMode           SyncMode         @default(INCREMENTAL)
+  status             IngestRunStatus  @default(RUNNING)
+  requestedBy        String?
+  requestId          String?
+  correlationId      String?
+  startedAt          DateTime         @default(now())
+  finishedAt         DateTime?
+  itemsDiscovered    Int              @default(0)
+  itemsProcessed     Int              @default(0)
+  itemsSucceeded     Int              @default(0)
+  itemsFailed        Int              @default(0)
+  warningsCount      Int              @default(0)
+  errorSummary       String?
+  metadata           Json?
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  dataSource         DataSource       @relation(fields: [dataSourceId], references: [id], onDelete: Cascade)
+  dataset            Dataset?         @relation(fields: [datasetId], references: [id], onDelete: SetNull)
+  events             IngestRunEvent[]
+  observations       Observation[]
+  metricSnapshots    DerivedMetricSnapshot[]
+
+  @@index([dataSourceId, startedAt(sort: Desc)])
+  @@index([status, startedAt(sort: Desc)])
+}
+
+model IngestRunEvent {
+  id         String           @id @default(cuid())
+  ingestRunId String
+  level      IngestEventLevel
+  code       String?
+  message    String
+  context    Json?
+  createdAt  DateTime         @default(now())
+  ingestRun  IngestRun        @relation(fields: [ingestRunId], references: [id], onDelete: Cascade)
+
+  @@index([ingestRunId, createdAt(sort: Asc)])
+}
+
+model SourceHealth {
+  id                        String          @id @default(cuid())
+  dataSourceId              String
+  scopeKey                  String
+  score                     Int
+  freshnessStatus           FreshnessStatus @default(UNKNOWN)
+  freshnessLagSeconds       Int?
+  successRate24h            Decimal?        @db.Decimal(5, 2)
+  partialFailureRate24h     Decimal?        @db.Decimal(5, 2)
+  averageLatencyMs24h       Int?
+  lastSuccessAt             DateTime?
+  lastFailureAt             DateTime?
+  lastErrorCode             String?
+  lastErrorMessage          String?
+  latestObservedDataPointAt DateTime?
+  metadata                  Json?
+  createdAt                 DateTime        @default(now())
+  updatedAt                 DateTime        @updatedAt
+  dataSource                DataSource      @relation(fields: [dataSourceId], references: [id], onDelete: Cascade)
+
+  @@unique([dataSourceId, scopeKey])
+  @@index([score, freshnessStatus])
+}
+
+model CacheEntry {
+  id         String      @id @default(cuid())
+  cacheKey   String      @unique
+  scope      CacheScope
+  tags       String[]
+  value      Json?
+  checksum   String?
+  ttlSeconds Int
+  staleAt    DateTime
+  expiresAt  DateTime
+  metadata   Json?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@index([scope, staleAt])
+  @@index([expiresAt])
+}
+
+model AdminAuditLog {
+  id           String      @id @default(cuid())
+  action       AdminAction
+  actorType    String
+  actorId      String?
+  requestId    String?
+  route        String?
+  sourceIpHash String?
+  userAgent    String?
+  targetType   String?
+  targetId     String?
+  outcome      String
+  metadata     Json?
+  createdAt    DateTime    @default(now())
+
+  @@index([action, createdAt(sort: Desc)])
+  @@index([targetType, targetId])
+}
