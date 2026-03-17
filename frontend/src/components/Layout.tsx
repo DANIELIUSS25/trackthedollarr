@@ -18,10 +18,12 @@ export function Layout() {
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2.5 border-b border-terminal-border px-5 py-4"
+            className="flex items-center gap-3 border-b border-terminal-border px-5 py-4"
           >
-            <span className="font-mono text-sm font-bold text-phosphor">[$]</span>
-            <span className="text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center border border-phosphor/70 bg-phosphor-dim" style={{ boxShadow: '0 0 6px rgba(0,255,65,0.15)' }}>
+              <span className="font-mono text-sm font-black leading-none text-phosphor">$</span>
+            </div>
+            <span className="text-[12px] font-black uppercase tracking-[0.2em] text-phosphor">
               TrackTheDollar
             </span>
           </Link>
@@ -49,9 +51,11 @@ export function Layout() {
 
       {/* Mobile Header */}
       <div className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between border-b border-terminal-border bg-terminal-black px-4 py-3 lg:hidden">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="font-mono text-sm font-bold text-phosphor">[$]</span>
-          <span className="text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary">
+        <Link to="/" className="flex items-center gap-2.5">
+          <div className="flex h-7 w-7 shrink-0 items-center justify-center border border-phosphor/70 bg-phosphor-dim">
+            <span className="font-mono text-sm font-black leading-none text-phosphor">$</span>
+          </div>
+          <span className="text-[12px] font-black uppercase tracking-[0.2em] text-phosphor">
             TrackTheDollar
           </span>
         </Link>

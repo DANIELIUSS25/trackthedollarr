@@ -4,13 +4,62 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="TrackTheDollar — Track U.S. government spending, national debt, foreign aid by country, monetary policy, and defense spending from official government sources." />
-    <meta name="theme-color" content="#000000" />
+
+    <!-- Primary SEO -->
+    <title>TrackTheDollar — U.S. National Debt Live Tracker | $39 Trillion | Official Data</title>
+    <meta name="description" content="Track the U.S. national debt live. The debt has crossed $39 trillion and is rising every second. Real-time data on national debt, dollar strength, inflation, interest rates, defense spending, and money supply — sourced exclusively from official U.S. government agencies." />
+    <meta name="keywords" content="US national debt tracker, national debt live, US debt clock, track the dollar, $39 trillion debt, federal debt, national debt 2025, dollar strength tracker, US government spending, inflation tracker, interest rates live, defense spending tracker, money supply M2, treasury data, FRED data" />
     <meta name="robots" content="index, follow" />
-    <title>TrackTheDollar</title>
+    <meta name="theme-color" content="#00ff41" />
+    <link rel="canonical" href="https://trackthedollar.com/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://trackthedollar.com/" />
+    <meta property="og:title" content="TrackTheDollar — U.S. National Debt Live Tracker | $39 Trillion" />
+    <meta property="og:description" content="The U.S. national debt has crossed $39 trillion. Track it live with real-time data from official government sources — Treasury, Federal Reserve, BLS, and more." />
+    <meta property="og:image" content="https://trackthedollar.com/og-image.png" />
+    <meta property="og:site_name" content="TrackTheDollar.com" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TrackTheDollar — U.S. National Debt Live | $39 Trillion" />
+    <meta name="twitter:description" content="Track the U.S. national debt in real time. $39 trillion and rising. Live official government data on debt, inflation, dollar strength, defense spending." />
+    <meta name="twitter:image" content="https://trackthedollar.com/og-image.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "TrackTheDollar",
+      "url": "https://trackthedollar.com",
+      "description": "Live U.S. national debt tracker. Real-time data on national debt, dollar strength, inflation, defense spending, and monetary policy from official U.S. government sources.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://trackthedollar.com/dashboard",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "U.S. National Debt Live Data",
+      "description": "Real-time U.S. national debt tracker sourced from official Treasury Fiscal Data. The national debt has crossed $39 trillion.",
+      "url": "https://trackthedollar.com/debt",
+      "creator": {
+        "@type": "Organization",
+        "name": "TrackTheDollar.com"
+      },
+      "isBasedOn": "https://fiscaldata.treasury.gov/"
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   </head>
   <body class="bg-terminal-black text-text-primary antialiased">
     <div id="root"></div>
