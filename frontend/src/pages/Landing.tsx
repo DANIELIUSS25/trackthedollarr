@@ -9,14 +9,20 @@ import type { OverviewData } from "../lib/types";
    ═══════════════════════════════════════════════════════════ */
 
 export function Landing() {
+  const [overview, setOverview] = useState<OverviewData | null>(null);
+
+  useEffect(() => {
+    api.overview({ range: "30d" }).then((res) => setOverview(res.data)).catch(() => {});
+  }, []);
+
   return (
     <div className="min-h-screen bg-terminal-black text-text-primary">
       <SiteNav />
       <Hero />
-      <SignalStrip />
+      <SignalStrip overview={overview} />
       <SystemSection />
-      <MonetaryProxySection />
-      <WarProxySection />
+      <MonetaryProxySection overview={overview} />
+      <WarProxySection overview={overview} />
       <SourcesSection />
       <ResearchSection />
       <SiteFooter />
@@ -32,9 +38,11 @@ function SiteNav() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-terminal-border bg-terminal-black">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-5 sm:px-8">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="font-mono text-sm font-bold text-phosphor">[$]</span>
-          <span className="text-[13px] font-bold uppercase tracking-[0.18em] text-text-primary">
+        <Link to="/" className="flex items-center gap-3">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center border border-phosphor/70 bg-phosphor-dim" style={{ boxShadow: '0 0 8px rgba(0,255,65,0.2)' }}>
+            <span className="font-mono text-base font-black leading-none text-phosphor">$</span>
+          </div>
+          <span className="text-[13px] font-black uppercase tracking-[0.2em] text-phosphor">
             TrackTheDollar
           </span>
         </Link>
@@ -94,27 +102,38 @@ function Hero() {
         <div className="max-w-3xl">
           <p className="mb-6 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">
             <span className="text-phosphor">&gt;</span>
-            Macro Intelligence Terminal
+            Live U.S. Fiscal Intelligence — Official Data Only
           </p>
 
           <h1 className="text-[2.5rem] font-bold leading-[1.06] tracking-tight sm:text-[3.25rem] lg:text-[4rem]">
-            <span className="text-phosphor">Track the forces</span>
+            <span className="text-phosphor">U.S. National Debt</span>
             <br />
-            <span className="text-text-secondary">reshaping the dollar system</span>
+            <span className="text-text-primary">has crossed $39 trillion</span>
           </h1>
 
           <p className="mt-7 max-w-lg text-[15px] leading-[1.7] text-text-secondary">
-            Debt expansion, monetary pressure, and geopolitical spending
-            flows — monitored through one terminal.
-            Sourced exclusively from official U.S. government data.
+            TrackTheDollar is the live national debt tracker built on official U.S. government sources.
+            Monitor debt, dollar strength, inflation, interest rates, and defense spending — all in one terminal.
           </p>
 
-          <div className="mt-12 flex items-center gap-5">
+          <div className="mt-8 flex flex-wrap gap-3">
+            <div className="border border-phosphor/20 bg-phosphor-dim px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-phosphor">
+              Live National Debt
+            </div>
+            <div className="border border-terminal-border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-text-tertiary">
+              Official Sources Only
+            </div>
+            <div className="border border-terminal-border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-text-tertiary">
+              Updated Daily
+            </div>
+          </div>
+
+          <div className="mt-10 flex items-center gap-5">
             <Link to="/dashboard" className="btn-primary">
-              Open Dashboard &rarr;
+              Track The Dollar &rarr;
             </Link>
-            <Link to="/methodology" className="btn-secondary">
-              Methodology
+            <Link to="/debt" className="btn-secondary">
+              View Debt Data
             </Link>
           </div>
         </div>
@@ -126,13 +145,7 @@ function Hero() {
 
 /* ─── 3. Signal Strip ─── */
 
-function SignalStrip() {
-  const [overview, setOverview] = useState<OverviewData | null>(null);
-
-  useEffect(() => {
-    api.overview({ range: "30d" }).then((res) => setOverview(res.data)).catch(() => {});
-  }, []);
-
+function SignalStrip({ overview }: { overview: OverviewData | null }) {
   const fmt = (item: { value: number | null; unit: string } | null | undefined) =>
     item ? formatValue(item.value, item.unit) : "—";
 
@@ -210,7 +223,10 @@ function SystemSection() {
 
 /* ─── 5. Monetary Expansion Proxy ─── */
 
-function MonetaryProxySection() {
+function MonetaryProxySection({ overview }: { overview: OverviewData | null }) {
+  const proxy = overview?.metrics.monetaryExpansionProxy;
+  const score = proxy?.value != null ? proxy.value.toFixed(1) : "—";
+
   return (
     <section className="border-b border-terminal-border py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
@@ -247,26 +263,34 @@ function MonetaryProxySection() {
             <div className="border border-terminal-border bg-terminal-surface p-6 sm:p-8">
               <div className="mb-6 flex items-center justify-between">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-tertiary">Monetary Expansion Proxy</span>
-                <span className="font-mono text-[10px] text-text-muted">12-month view</span>
+                {proxy && !proxy.stale && (
+                  <span className="flex items-center gap-1.5 text-[10px] font-medium text-phosphor">
+                    <span className="h-1.5 w-1.5 bg-phosphor" />
+                    LIVE
+                  </span>
+                )}
               </div>
-              <div className="relative h-52 border-b border-l border-terminal-border">
-                <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-[3px] px-3 pb-1">
-                  {proxyChartBars.map((h, i) => (
-                    <div key={i} className="flex-1 bg-phosphor/20" style={{ height: `${h}%` }} />
-                  ))}
-                </div>
-                <div className="absolute -left-1 top-0 flex h-full flex-col justify-between py-1">
-                  <span className="font-mono text-[9px] text-text-muted">100</span>
-                  <span className="font-mono text-[9px] text-text-muted">50</span>
-                  <span className="font-mono text-[9px] text-text-muted">0</span>
-                </div>
+              <div className="flex flex-col items-center justify-center py-10">
+                <p className="font-mono text-6xl font-black tracking-tight text-phosphor" style={{ textShadow: '0 0 20px rgba(0,255,65,0.3)' }}>
+                  {score}
+                </p>
+                <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-text-tertiary">
+                  out of 100 — current score
+                </p>
+                {proxy?.stale && (
+                  <p className="mt-2 text-[10px] text-amber">Data may be stale</p>
+                )}
               </div>
-              <div className="mt-3 flex items-center justify-between">
-                <span className="font-mono text-[10px] text-text-muted">12mo ago</span>
-                <span className="font-mono text-[10px] text-text-muted">Present</span>
+              <div className="mt-2 h-1 w-full bg-terminal-raised">
+                {proxy?.value != null && (
+                  <div
+                    className="h-full bg-phosphor transition-all"
+                    style={{ width: `${Math.min(proxy.value, 100)}%`, boxShadow: '0 0 6px rgba(0,255,65,0.4)' }}
+                  />
+                )}
               </div>
               <p className="mt-5 text-[11px] leading-relaxed text-text-muted">
-                Live data available on the dashboard. Sources: Federal Reserve, Treasury, FRED.
+                Sources: Federal Reserve, U.S. Treasury, FRED.
               </p>
             </div>
           </div>
@@ -278,17 +302,34 @@ function MonetaryProxySection() {
 
 /* ─── 6. War Spending Proxy ─── */
 
-function WarProxySection() {
+function WarProxySection({ overview }: { overview: OverviewData | null }) {
+  const proxy = overview?.metrics.warSpendingProxy;
+  const score = proxy?.value != null ? proxy.value.toFixed(1) : "—";
+
   return (
     <section className="border-b border-terminal-border py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-5 lg:gap-16">
           <div className="order-2 lg:order-1 lg:col-span-3">
             <div className="border border-terminal-border bg-terminal-surface p-6 sm:p-8">
-              <div className="mb-6">
+              <div className="mb-6 flex items-center justify-between">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-tertiary">
                   War Spending Proxy — Component Weights
                 </span>
+                {proxy && !proxy.stale && (
+                  <span className="flex items-center gap-1.5 text-[10px] font-medium text-phosphor">
+                    <span className="h-1.5 w-1.5 bg-phosphor" />
+                    LIVE
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-col items-center justify-center py-6 border-b border-terminal-border mb-6">
+                <p className="font-mono text-5xl font-black tracking-tight text-phosphor" style={{ textShadow: '0 0 20px rgba(0,255,65,0.3)' }}>
+                  {score}
+                </p>
+                <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-text-tertiary">
+                  current score / 100
+                </p>
               </div>
               <div className="divide-y divide-terminal-border">
                 {warComponents.map((c) => (
@@ -486,7 +527,6 @@ const systemChannels = [
   { name: "Global Dollar Demand", description: "Broad Dollar Index measures relative strength against trading partners", source: "FRED" },
 ];
 
-const proxyChartBars = [35, 42, 38, 55, 48, 62, 58, 70, 65, 72, 68, 75, 60, 78, 72, 80, 74, 68, 82, 76, 70, 85, 78, 72];
 
 const warComponents = [
   { name: "DoD Budget Authority", source: "USAspending.gov", weight: "30%" },
