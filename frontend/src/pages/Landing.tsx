@@ -1,338 +1,685 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+
+/* ═══════════════════════════════════════════════════════════
+   Landing — Institutional homepage for TrackTheDollar.com
+   9 sections: Nav, Hero, Signal Strip, System, Monetary Proxy,
+   War Proxy, Sources, Research, Footer
+   ═══════════════════════════════════════════════════════════ */
 
 export function Landing() {
   return (
-    <div className="-mx-4 -mt-6 sm:-mx-6 lg:-mx-10">
-      {/* ── Hero ── */}
-      <section className="relative overflow-hidden border-b border-border-subtle px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
-        {/* Animated mesh background */}
-        <div className="absolute inset-0 bg-hero-mesh opacity-60" />
-        <div
-          className="absolute inset-0 opacity-[0.025]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 25% 25%, #c9a94e 1px, transparent 1px), radial-gradient(circle at 75% 75%, #5b8def 1px, transparent 1px)",
-            backgroundSize: "64px 64px",
-          }}
-        />
-        {/* Glow orbs */}
-        <div className="absolute left-1/4 top-1/4 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-gold/[0.04] blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 h-[400px] w-[400px] translate-y-1/3 rounded-full bg-accent-blue/[0.06] blur-[100px]" />
-
-        <div className="relative mx-auto max-w-4xl text-center animate-fade-up">
-          {/* Status badge */}
-          <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-border bg-surface-2/60 px-5 py-2 text-xs font-medium text-text-secondary backdrop-blur-sm">
-            <span className="glow-dot h-2 w-2" />
-            Public-source macroeconomic intelligence
-          </div>
-
-          <h1 className="mb-6 text-4xl font-bold tracking-tight text-text-primary sm:text-5xl lg:text-[3.5rem] lg:leading-[1.1]">
-            Where is the{" "}
-            <span className="text-gradient-gold">Dollar</span>{" "}
-            going?
-          </h1>
-
-          <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-text-secondary sm:text-lg">
-            Track the U.S. dollar system through official government data.
-            Debt expansion, monetary policy signals, defense spending, and
-            derived proxy metrics — with full methodology transparency.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link to="/dashboard" className="btn-primary">
-              Open Dashboard
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </Link>
-            <Link to="/methodology" className="btn-secondary">
-              View Methodology
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Signal categories ── */}
-      <section className="border-b border-border-subtle px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-12 text-center animate-fade-up">
-            <p className="section-label mb-3">Intelligence Domains</p>
-            <p className="text-lg text-text-secondary">
-              Macro signals sourced directly from U.S. government agencies
-            </p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {signals.map((signal, i) => (
-              <Link
-                key={signal.title}
-                to={signal.to}
-                className="card card-interactive group"
-                style={{ animationDelay: `${i * 60}ms` }}
-              >
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-surface-3/80 text-base font-bold text-accent-gold ring-1 ring-border-subtle">
-                  {signal.icon}
-                </div>
-                <h3 className="mb-1.5 text-sm font-semibold text-text-primary group-hover:text-accent-gold transition-colors">
-                  {signal.title}
-                </h3>
-                <p className="text-xs leading-relaxed text-text-muted">
-                  {signal.description}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Data provenance ── */}
-      <section className="border-b border-border-subtle bg-surface-0 px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
-          <div className="mb-12 text-center animate-fade-up">
-            <p className="section-label mb-3">Data Provenance</p>
-            <p className="text-lg text-text-secondary">
-              Every data point is traced back to its official source
-            </p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {sources.map((source, i) => (
-              <div
-                key={source.name}
-                className="card group"
-                style={{ animationDelay: `${i * 50}ms` }}
-              >
-                <div className="mb-3 flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-blue-dim text-xs font-bold text-accent-blue ring-1 ring-accent-blue/10">
-                    {source.name.charAt(0)}
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-semibold text-text-primary">
-                      {source.name}
-                    </h3>
-                    <p className="text-2xs text-text-muted">{source.agency}</p>
-                  </div>
-                </div>
-                <p className="text-xs leading-relaxed text-text-secondary">
-                  {source.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Methodology transparency ── */}
-      <section className="border-b border-border-subtle px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
-          <div className="grid items-start gap-10 lg:grid-cols-2">
-            <div className="animate-fade-up">
-              <p className="section-label mb-3">Our Approach</p>
-              <h2 className="mb-5 text-2xl font-bold tracking-tight text-text-primary">
-                Methodology-first design
-              </h2>
-              <p className="mb-6 text-sm leading-relaxed text-text-secondary">
-                Every metric shows exactly how it was calculated, where the
-                data came from, and when it was last updated. Proxy metrics
-                are explicitly labeled as derived estimates — never presented
-                as official government statistics.
-              </p>
-              <ul className="space-y-3 text-sm text-text-secondary">
-                {[
-                  "Source timestamps on every data point",
-                  "Freshness indicators flag stale data",
-                  "Proxy metrics carry mandatory disclosures",
-                  "Methodology notes explain calculations",
-                  "Source health monitoring tracks reliability",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <div className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-data-positive-dim">
-                      <svg
-                        className="h-3 w-3 text-data-positive"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2.5}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    </div>
-                    <span className="leading-relaxed">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="space-y-4 animate-fade-up" style={{ animationDelay: "100ms" }}>
-              <div className="disclosure-box">
-                <p className="mb-2 section-label text-accent-purple">
-                  Example: Proxy Metric Disclosure
-                </p>
-                <p className="text-sm leading-relaxed text-text-secondary">
-                  The Monetary Expansion Proxy is a composite score combining
-                  Federal Reserve balance sheet growth, reserve balances, M2
-                  changes, and debt acceleration. It is not an official
-                  money-printing counter or government statistic.
-                </p>
-              </div>
-              <div className="warning-box">
-                <div className="flex items-start gap-2.5">
-                  <svg
-                    className="mt-0.5 h-4 w-4 flex-shrink-0 text-data-warning"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 16.5c-.77.833.192 2.5 1.732 2.5z"
-                    />
-                  </svg>
-                  <p className="text-sm leading-relaxed text-text-secondary">
-                    Data may be subject to revision. Treasury fiscal data is
-                    updated on business days only. BLS statistics follow their
-                    published release calendar.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 bg-gradient-to-t from-accent-gold/[0.03] to-transparent" />
-        <div className="relative mx-auto max-w-2xl text-center animate-fade-up">
-          <h2 className="mb-5 text-2xl font-bold tracking-tight text-text-primary sm:text-3xl">
-            Ready to track the dollar?
-          </h2>
-          <p className="mb-8 text-sm leading-relaxed text-text-secondary sm:text-base">
-            Access real-time macroeconomic signals from official U.S.
-            government data sources — with full transparency and no spin.
-          </p>
-          <Link to="/dashboard" className="btn-primary">
-            Open the Dashboard
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 7l5 5m0 0l-5 5m5-5H6"
-              />
-            </svg>
-          </Link>
-        </div>
-      </section>
+    <div className="min-h-screen bg-surface-0 text-text-primary">
+      <SiteNav />
+      <Hero />
+      <SignalStrip />
+      <SystemSection />
+      <MonetaryProxySection />
+      <WarProxySection />
+      <SourcesSection />
+      <ResearchSection />
+      <SiteFooter />
     </div>
   );
 }
 
+/* ─── 1. Navigation ─── */
+
+function SiteNav() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border-subtle bg-surface-0/95 backdrop-blur-sm">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-5 sm:px-8">
+        {/* Wordmark */}
+        <Link to="/" className="flex items-center gap-1">
+          <span className="text-[13px] font-bold tracking-[0.18em] uppercase text-text-primary">
+            Track
+          </span>
+          <span className="text-[13px] font-bold tracking-[0.18em] uppercase text-accent-gold">
+            The
+          </span>
+          <span className="text-[13px] font-bold tracking-[0.18em] uppercase text-text-primary">
+            Dollar
+          </span>
+        </Link>
+
+        {/* Desktop nav */}
+        <div className="hidden items-center gap-8 md:flex">
+          <Link
+            to="/dashboard"
+            className="text-[13px] font-medium text-text-tertiary transition-colors hover:text-text-primary"
+          >
+            Dashboard
+          </Link>
+          <Link
+            to="/methodology"
+            className="text-[13px] font-medium text-text-tertiary transition-colors hover:text-text-primary"
+          >
+            Methodology
+          </Link>
+          <Link
+            to="/source-health"
+            className="text-[13px] font-medium text-text-tertiary transition-colors hover:text-text-primary"
+          >
+            Sources
+          </Link>
+          <Link
+            to="/dashboard"
+            className="rounded-md border border-border bg-surface-2 px-4 py-1.5 text-[13px] font-semibold text-text-secondary transition-all hover:border-accent-gold/30 hover:text-text-primary"
+          >
+            Open Platform
+            <span className="ml-1.5 text-text-muted">&rarr;</span>
+          </Link>
+        </div>
+
+        {/* Mobile toggle */}
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="rounded-md p-2 text-text-tertiary md:hidden"
+          aria-label="Menu"
+        >
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20">
+            {mobileOpen ? (
+              <path
+                fillRule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            ) : (
+              <path
+                fillRule="evenodd"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clipRule="evenodd"
+              />
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="border-t border-border-subtle bg-surface-1 px-5 py-4 md:hidden">
+          <div className="flex flex-col gap-3">
+            <Link to="/dashboard" className="text-sm text-text-secondary hover:text-text-primary">Dashboard</Link>
+            <Link to="/methodology" className="text-sm text-text-secondary hover:text-text-primary">Methodology</Link>
+            <Link to="/source-health" className="text-sm text-text-secondary hover:text-text-primary">Sources</Link>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+/* ─── 2. Hero ─── */
+
+function Hero() {
+  return (
+    <section className="relative pt-36 pb-24 sm:pt-44 sm:pb-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="max-w-3xl">
+          <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent-gold/70">
+            Macro Intelligence Platform
+          </p>
+
+          <h1 className="text-[2.75rem] font-bold leading-[1.06] tracking-tight text-text-primary sm:text-[3.5rem] lg:text-[4.25rem]">
+            Track the forces{" "}
+            <span className="text-text-secondary">reshaping</span>
+            <br />
+            the dollar system
+          </h1>
+
+          <p className="mt-7 max-w-lg text-[15px] leading-[1.7] text-text-secondary">
+            Debt expansion, monetary pressure, and geopolitical spending
+            flows — monitored through one intelligence terminal.
+            Sourced exclusively from official U.S. government data.
+          </p>
+
+          <div className="mt-12 flex items-center gap-5">
+            <Link to="/dashboard" className="btn-primary">
+              Open Dashboard
+              <span className="ml-0.5 text-text-inverse/60">&rarr;</span>
+            </Link>
+            <Link to="/methodology" className="btn-secondary">
+              Methodology
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Subtle rule */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-border-subtle" />
+    </section>
+  );
+}
+
+/* ─── 3. Signal Strip ─── */
+
+function SignalStrip() {
+  return (
+    <section className="border-b border-border-subtle">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-x divide-border-subtle">
+          {signals.map((s) => (
+            <Link
+              key={s.label}
+              to={s.to}
+              className="group relative px-5 py-5 transition-colors hover:bg-surface-1 sm:px-6 sm:py-6"
+            >
+              {/* Top accent line on hover */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-transparent transition-colors group-hover:bg-accent-gold/30" />
+
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">
+                {s.label}
+              </p>
+              <p className="mt-2.5 font-mono text-lg font-semibold tracking-tight text-text-primary sm:text-xl">
+                {s.display}
+              </p>
+              <p className="mt-1.5 text-[11px] text-text-tertiary">
+                {s.source}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── 4. System Section ─── */
+
+function SystemSection() {
+  return (
+    <section className="border-b border-border-subtle py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid gap-16 lg:grid-cols-2 lg:gap-20">
+          {/* Left — editorial text */}
+          <div>
+            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">
+              System Architecture
+            </p>
+            <h2 className="mb-5 text-[1.75rem] font-bold leading-[1.15] tracking-tight text-text-primary sm:text-[2rem]">
+              Five pressure channels
+              <br />
+              <span className="text-text-secondary">drive the dollar system</span>
+            </h2>
+            <p className="max-w-md text-[15px] leading-[1.7] text-text-secondary">
+              TrackTheDollar monitors each channel through primary official
+              sources. No third-party intermediaries. No proprietary models.
+            </p>
+          </div>
+
+          {/* Right — structured flow */}
+          <div className="space-y-0 divide-y divide-border-subtle border-t border-border-subtle lg:border-t">
+            {systemChannels.map((ch, i) => (
+              <div
+                key={ch.name}
+                className="flex items-start gap-5 py-5 sm:gap-6"
+              >
+                <span className="mt-0.5 w-6 text-center font-mono text-xs font-medium text-text-muted">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-text-primary">
+                    {ch.name}
+                  </p>
+                  <p className="mt-1 text-[13px] leading-relaxed text-text-tertiary">
+                    {ch.description}
+                  </p>
+                </div>
+                <span className="hidden shrink-0 text-[11px] font-medium text-text-muted sm:block">
+                  {ch.source}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── 5. Monetary Expansion Proxy ─── */
+
+function MonetaryProxySection() {
+  return (
+    <section className="border-b border-border-subtle py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid gap-14 lg:grid-cols-5 lg:gap-16">
+          {/* Explanation */}
+          <div className="lg:col-span-2">
+            <div className="mb-4 flex items-center gap-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">
+                Derived Metric
+              </p>
+              <span className="badge badge-proxy">Proxy</span>
+            </div>
+            <h2 className="mb-5 text-[1.5rem] font-bold leading-[1.2] tracking-tight text-text-primary sm:text-[1.75rem]">
+              Monetary Expansion Proxy
+            </h2>
+            <p className="mb-5 text-[15px] leading-[1.7] text-text-secondary">
+              A composite score combining Federal Reserve balance sheet growth,
+              reserve balances, M2 velocity, and debt acceleration — designed to
+              approximate the directional pressure of monetary expansion.
+            </p>
+            <p className="text-[13px] leading-[1.7] text-text-muted">
+              Not an official statistic. Derived estimate with documented
+              methodology and disclosed limitations.
+            </p>
+
+            <div className="mt-8 flex gap-2">
+              <span className="rounded-md border border-border bg-surface-2 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-text-tertiary">
+                Composite Index
+              </span>
+              <span className="rounded-md border border-border bg-surface-2 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-text-tertiary">
+                4 Components
+              </span>
+            </div>
+
+            <div className="mt-8">
+              <Link
+                to="/monetary-expansion-proxy"
+                className="text-[13px] font-semibold text-text-secondary transition-colors hover:text-text-primary"
+              >
+                View full methodology &rarr;
+              </Link>
+            </div>
+          </div>
+
+          {/* Chart container */}
+          <div className="lg:col-span-3">
+            <div className="rounded-md border border-border-subtle bg-surface-1 p-6 sm:p-8">
+              <div className="mb-6 flex items-center justify-between">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-tertiary">
+                  Monetary Expansion Proxy
+                </span>
+                <span className="font-mono text-[10px] text-text-muted">12-month view</span>
+              </div>
+
+              {/* Chart placeholder — clean axis frame */}
+              <div className="relative h-52 border-b border-l border-border-subtle">
+                <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-[3px] px-3 pb-1">
+                  {proxyChartBars.map((h, i) => (
+                    <div
+                      key={i}
+                      className="flex-1 rounded-sm bg-surface-4 transition-colors"
+                      style={{ height: `${h}%` }}
+                    />
+                  ))}
+                </div>
+                {/* Y-axis labels */}
+                <div className="absolute -left-1 top-0 flex h-full flex-col justify-between py-1">
+                  <span className="font-mono text-[9px] text-text-muted">100</span>
+                  <span className="font-mono text-[9px] text-text-muted">50</span>
+                  <span className="font-mono text-[9px] text-text-muted">0</span>
+                </div>
+              </div>
+
+              <div className="mt-3 flex items-center justify-between">
+                <span className="font-mono text-[10px] text-text-muted">
+                  12mo ago
+                </span>
+                <span className="font-mono text-[10px] text-text-muted">
+                  Present
+                </span>
+              </div>
+
+              <p className="mt-5 text-[11px] leading-relaxed text-text-muted">
+                Live data available on the dashboard. Sources: Federal Reserve,
+                Treasury, FRED.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── 6. War Spending Proxy ─── */
+
+function WarProxySection() {
+  return (
+    <section className="border-b border-border-subtle py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid gap-14 lg:grid-cols-5 lg:gap-16">
+          {/* Data display */}
+          <div className="order-2 lg:order-1 lg:col-span-3">
+            <div className="rounded-md border border-border-subtle bg-surface-1 p-6 sm:p-8">
+              <div className="mb-6 flex items-center justify-between">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-tertiary">
+                  War Spending Proxy — Component Weights
+                </span>
+              </div>
+
+              {/* Component table */}
+              <div className="divide-y divide-border-subtle">
+                {warComponents.map((c) => (
+                  <div key={c.name} className="flex items-center justify-between py-4">
+                    <div>
+                      <p className="text-sm font-medium text-text-primary">{c.name}</p>
+                      <p className="mt-0.5 text-[11px] text-text-tertiary">{c.source}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-mono text-sm font-semibold tabular-nums text-text-primary">{c.weight}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <p className="mt-6 text-[11px] leading-relaxed text-text-muted">
+                All components sourced from USAspending.gov and
+                foreignassistance.gov. Updated on their published schedules.
+              </p>
+            </div>
+          </div>
+
+          {/* Explanation */}
+          <div className="order-1 lg:order-2 lg:col-span-2">
+            <div className="mb-4 flex items-center gap-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">
+                Derived Metric
+              </p>
+              <span className="badge badge-proxy">Proxy</span>
+            </div>
+            <h2 className="mb-5 text-[1.5rem] font-bold leading-[1.2] tracking-tight text-text-primary sm:text-[1.75rem]">
+              War Spending Proxy
+            </h2>
+            <p className="mb-5 text-[15px] leading-[1.7] text-text-secondary">
+              A composite score combining DoD obligations, contract awards,
+              and foreign security assistance disbursements — designed to
+              approximate the directional pressure of defense-related spending.
+            </p>
+            <p className="text-[13px] leading-[1.7] text-text-muted">
+              Not an official defense spending tracker. Derived estimate
+              combining multiple official data sources with documented methodology.
+            </p>
+
+            <div className="mt-8">
+              <Link
+                to="/war-spending-proxy"
+                className="text-[13px] font-semibold text-text-secondary transition-colors hover:text-text-primary"
+              >
+                View full methodology &rarr;
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── 7. Sources ─── */
+
+function SourcesSection() {
+  return (
+    <section className="border-b border-border-subtle py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mb-14 max-w-xl">
+          <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">
+            Data Provenance
+          </p>
+          <h2 className="mb-5 text-[1.75rem] font-bold leading-[1.15] tracking-tight text-text-primary sm:text-[2rem]">
+            Official sources only
+          </h2>
+          <p className="text-[15px] leading-[1.7] text-text-secondary">
+            Every data point sourced directly from U.S. government agencies.
+            No third-party aggregators. Full attribution and freshness
+            monitoring on every metric.
+          </p>
+        </div>
+
+        <div className="grid gap-px bg-border-subtle sm:grid-cols-2 lg:grid-cols-3 rounded-md overflow-hidden">
+          {sources.map((src) => (
+            <div
+              key={src.name}
+              className="bg-surface-0 p-7 sm:p-8"
+            >
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="text-[13px] font-semibold text-text-primary">
+                  {src.name}
+                </h3>
+                <div className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-data-positive" />
+                  <span className="text-[10px] font-medium text-text-muted">Active</span>
+                </div>
+              </div>
+              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-text-muted">
+                {src.agency}
+              </p>
+              <p className="text-[13px] leading-[1.65] text-text-tertiary">
+                {src.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 text-center">
+          <Link
+            to="/source-health"
+            className="text-[13px] font-semibold text-text-secondary transition-colors hover:text-text-primary"
+          >
+            View source health dashboard &rarr;
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── 8. Research / Briefings Preview ─── */
+
+function ResearchSection() {
+  return (
+    <section className="border-b border-border-subtle py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
+          <div>
+            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em] text-text-tertiary">
+              Intelligence Briefings
+            </p>
+            <h2 className="mb-5 text-[1.75rem] font-bold leading-[1.15] tracking-tight text-text-primary sm:text-[2rem]">
+              Research &amp; analysis
+            </h2>
+            <p className="text-[15px] leading-[1.7] text-text-secondary">
+              Structured briefings on macro regime shifts, dollar system stress
+              tests, and methodology updates. Written for institutional
+              audiences.
+            </p>
+          </div>
+
+          <div className="space-y-0">
+            {briefings.map((b, i) => (
+              <div
+                key={b.title}
+                className={`flex items-start gap-5 py-5 ${
+                  i < briefings.length - 1 ? "border-b border-border-subtle" : ""
+                }`}
+              >
+                <span className="mt-0.5 shrink-0 rounded border border-border bg-surface-2 px-2 py-0.5 font-mono text-[10px] font-medium text-text-muted">
+                  {b.date}
+                </span>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium leading-snug text-text-primary">
+                    {b.title}
+                  </p>
+                  <p className="mt-1.5 text-[12px] text-text-tertiary">
+                    {b.category}
+                  </p>
+                </div>
+              </div>
+            ))}
+
+            <p className="pt-5 text-[12px] text-text-muted">
+              Briefings publishing soon. Platform currently in data-only mode.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── 9. Footer ─── */
+
+function SiteFooter() {
+  return (
+    <footer className="py-20 sm:py-24">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid gap-12 sm:grid-cols-3">
+          {/* Col 1 — Brand */}
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-text-tertiary">
+              TrackTheDollar
+            </p>
+            <p className="mt-4 text-[13px] leading-[1.7] text-text-muted">
+              Macro intelligence platform. Official government data
+              with full methodology transparency.
+            </p>
+          </div>
+
+          {/* Col 2 — Platform */}
+          <div>
+            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">
+              Platform
+            </p>
+            <div className="flex flex-col gap-2.5">
+              <Link to="/dashboard" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Dashboard</Link>
+              <Link to="/dollar-strength" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Dollar Strength</Link>
+              <Link to="/debt" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">National Debt</Link>
+              <Link to="/inflation" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Inflation</Link>
+              <Link to="/rates" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Interest Rates</Link>
+            </div>
+          </div>
+
+          {/* Col 3 — Transparency */}
+          <div>
+            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">
+              Transparency
+            </p>
+            <div className="flex flex-col gap-2.5">
+              <Link to="/methodology" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Methodology</Link>
+              <Link to="/source-health" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Source Health</Link>
+              <Link to="/monetary-expansion-proxy" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">Monetary Proxy</Link>
+              <Link to="/war-spending-proxy" className="text-[13px] text-text-tertiary transition-colors hover:text-text-secondary">War Spending Proxy</Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 border-t border-border-subtle pt-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-[11px] text-text-muted">
+              &copy; {new Date().getFullYear()} TrackTheDollar.com
+            </p>
+            <p className="max-w-md text-[11px] leading-relaxed text-text-muted sm:text-right">
+              Not investment advice. All data from official U.S. government
+              agencies. Proxy metrics are derived estimates, not official statistics.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Data
+   ═══════════════════════════════════════════════════════════ */
+
 const signals = [
+  { label: "Dollar Index", display: "—", source: "FRED · Fed", to: "/dollar-strength" },
+  { label: "National Debt", display: "—", source: "Treasury", to: "/debt" },
+  { label: "M2 Supply", display: "—", source: "FRED · Fed", to: "/money-supply" },
+  { label: "CPI", display: "—", source: "BLS", to: "/inflation" },
+  { label: "Defense", display: "—", source: "USAspending", to: "/defense-spending" },
+  { label: "Sources", display: "6 / 6", source: "All active", to: "/source-health" },
+];
+
+const systemChannels = [
   {
-    icon: "$",
-    title: "Dollar Strength",
-    description: "Broad dollar index, z-score, and trend analysis",
-    to: "/dollar-strength",
+    name: "Interest Rates",
+    description: "Fed Funds rate and Treasury yield curve set the price of money",
+    source: "FRED",
   },
   {
-    icon: "D",
-    title: "National Debt",
-    description: "Total debt, public holdings, growth velocity",
-    to: "/debt",
+    name: "Debt Issuance",
+    description: "Treasury borrowing velocity and outstanding obligations",
+    source: "Treasury Fiscal Data",
   },
   {
-    icon: "%",
-    title: "Inflation & Rates",
-    description: "CPI, core inflation, Fed funds, Treasury yields",
-    to: "/inflation",
+    name: "Liquidity & Money Supply",
+    description: "M2, Fed balance sheet, and reserve balances drive system liquidity",
+    source: "Federal Reserve",
   },
   {
-    icon: "M",
-    title: "Money Supply",
-    description: "M2, Fed assets, reserve balances",
-    to: "/money-supply",
+    name: "Inflation Pressure",
+    description: "CPI, core inflation, and breakeven expectations signal price regime",
+    source: "BLS / FRED",
   },
   {
-    icon: "P",
-    title: "Monetary Expansion Proxy",
-    description: "Derived composite of balance sheet and liquidity signals",
-    to: "/monetary-expansion-proxy",
+    name: "Global Dollar Demand",
+    description: "Broad Dollar Index measures relative strength against trading partners",
+    source: "FRED",
   },
-  {
-    icon: "W",
-    title: "War Spending Proxy",
-    description: "Derived composite of defense and security aid signals",
-    to: "/war-spending-proxy",
-  },
-  {
-    icon: "F",
-    title: "Defense & Foreign Aid",
-    description: "DoD obligations, contracts, security assistance",
-    to: "/defense-spending",
-  },
-  {
-    icon: "S",
-    title: "Source Health",
-    description: "Live data source reliability and freshness monitoring",
-    to: "/source-health",
-  },
+];
+
+const proxyChartBars = [35, 42, 38, 55, 48, 62, 58, 70, 65, 72, 68, 75, 60, 78, 72, 80, 74, 68, 82, 76, 70, 85, 78, 72];
+
+const warComponents = [
+  { name: "DoD Budget Authority", source: "USAspending.gov", weight: "30%" },
+  { name: "DoD Obligations", source: "USAspending.gov", weight: "25%" },
+  { name: "Defense Contract Awards", source: "USAspending.gov", weight: "25%" },
+  { name: "Foreign Security Assistance", source: "foreignassistance.gov", weight: "20%" },
 ];
 
 const sources = [
   {
     name: "FRED",
     agency: "Federal Reserve Bank of St. Louis",
-    description:
-      "Dollar index, Fed funds rate, Treasury yields, M2, breakeven inflation rates.",
+    description: "Dollar index, Fed funds rate, Treasury yields, M2, breakeven inflation rates.",
   },
   {
     name: "Treasury Fiscal Data",
     agency: "U.S. Department of the Treasury",
-    description:
-      "Debt to the Penny, Daily Treasury Statement, Monthly Treasury Statement.",
+    description: "Debt to the Penny, Daily Treasury Statement, Monthly Treasury Statement.",
   },
   {
     name: "Federal Reserve",
     agency: "Board of Governors",
-    description:
-      "Balance sheet assets, reserve balances, and monetary policy data.",
+    description: "Balance sheet assets, reserve balances, and monetary policy data.",
   },
   {
     name: "USAspending",
     agency: "U.S. Department of the Treasury",
-    description:
-      "DoD budgetary resources, obligations, outlays, and contract awards.",
+    description: "DoD budgetary resources, obligations, outlays, and contract awards.",
   },
   {
     name: "Foreign Assistance",
     agency: "USAID / State Department",
-    description:
-      "Foreign assistance obligations and disbursements, security sector breakdowns.",
+    description: "Foreign assistance obligations and disbursements, security sector data.",
   },
   {
     name: "BLS",
     agency: "Bureau of Labor Statistics",
-    description:
-      "Consumer Price Index (all items and core) monthly releases.",
+    description: "Consumer Price Index — all items and core, monthly releases.",
+  },
+];
+
+const briefings = [
+  {
+    date: "Coming",
+    title: "Dollar Index Regime Analysis: Current Cycle Position",
+    category: "Dollar System",
+  },
+  {
+    date: "Coming",
+    title: "Debt Acceleration and Yield Curve Implications",
+    category: "Fiscal Pressure",
+  },
+  {
+    date: "Coming",
+    title: "Proxy Methodology Update: Component Weight Review",
+    category: "Methodology",
   },
 ];

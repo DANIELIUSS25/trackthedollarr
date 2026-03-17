@@ -37,15 +37,15 @@ export function DefenseSpending() {
         range={range}
         onRangeChange={setRange}
       >
-        <div className="flex gap-1 rounded-md border border-border-subtle bg-surface-3 p-0.5">
+        <div className="flex gap-1 rounded-lg border border-border-subtle bg-surface-2/50 backdrop-blur-sm p-0.5">
           {categories.map((c) => (
             <button
               key={c.value}
               onClick={() => setCategory(c.value)}
               className={`rounded px-3 py-1 text-xs font-medium transition-colors ${
                 category === c.value
-                  ? "bg-surface-5 text-text-primary"
-                  : "text-text-tertiary hover:text-text-secondary"
+                  ? "bg-accent-gold-dim text-accent-gold shadow-sm"
+                  : "text-text-muted hover:text-text-secondary"
               }`}
             >
               {c.label}

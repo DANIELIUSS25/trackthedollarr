@@ -22,8 +22,11 @@ export function App() {
     <BrowserRouter>
       <Suspense fallback={<LoadingState />}>
         <Routes>
+          {/* Landing page — standalone layout, no sidebar */}
+          <Route index element={<Landing />} />
+
+          {/* App pages — sidebar layout */}
           <Route element={<Layout />}>
-            <Route index element={<Landing />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="dollar-strength" element={<DollarStrength />} />
             <Route path="debt" element={<Debt />} />
@@ -36,8 +39,9 @@ export function App() {
             <Route path="war-spending-proxy" element={<WarSpendingProxy />} />
             <Route path="methodology" element={<Methodology />} />
             <Route path="source-health" element={<SourceHealth />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

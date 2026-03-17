@@ -54,15 +54,15 @@ export function MonetaryExpansionProxy() {
                 </span>
                 <span className="badge badge-proxy">Proxy Metric</span>
               </div>
-              <p className="mt-1 text-xs text-text-tertiary">
+              <p className="mt-1 text-xs text-text-muted">
                 As of {formatDate(snapshot.asOf)}
               </p>
             </div>
 
             <p className="text-sm text-text-secondary">{metric.description}</p>
 
-            <div className="mt-4 rounded bg-surface-3 px-3 py-2">
-              <p className="text-2xs font-semibold uppercase tracking-wider text-text-tertiary">
+            <div className="mt-4 stat-cell">
+              <p className="section-label">
                 Formula
               </p>
               <p className="mt-1 font-mono text-xs text-text-secondary">
@@ -77,7 +77,7 @@ export function MonetaryExpansionProxy() {
               <h3 className="card-title mb-3">Methodology</h3>
               <p className="mb-2 text-sm text-text-secondary">{methodology.summary}</p>
               {methodology.limitations && (
-                <div className="mt-3 rounded bg-data-warning/5 px-3 py-2 text-xs text-data-warning">
+                <div className="mt-3 rounded-lg bg-data-warning/5 border border-data-warning/15 px-3.5 py-2.5 text-xs text-data-warning">
                   <span className="font-medium">Limitations: </span>
                   {methodology.limitations}
                 </div>
