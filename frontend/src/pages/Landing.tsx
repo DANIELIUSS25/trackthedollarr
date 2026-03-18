@@ -116,6 +116,7 @@ function LiveDebtCounter({ overview }: { overview: OverviewData | null }) {
 
     const latest = sorted[0];
     const prev = sorted[1];
+    if (!latest || !prev) return;
     if (typeof latest.value !== "number" || typeof prev.value !== "number") return;
 
     const toUsd = (v: number) => (unit === "billions_usd" ? v * 1e9 : v);
